@@ -21,7 +21,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 // Get a reference to the auth service
-export const auth = getAuth(app)
+const auth = getAuth(app)
 
 // Get a reference to the database service
-export const database = getDatabase(app)
+const database = getDatabase(app)
+
+export { auth, database }

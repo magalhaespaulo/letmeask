@@ -1,13 +1,43 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 import googleIconImg from '../../public/images/google-icon.svg'
 import loginIconImg from '../../public/images/login.svg'
 
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { auth } from '../services/firebase'
+
 const Home: NextPage = () => {
+  const router = useRouter()
+
+  const signIn = () => {
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential!.accessToken
+        // The signed-in user info.
+        const user = result.user
+        // ...
+        console.log(token, user)
+        router.push('/new-room')
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.email
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        // ...
+      })
+  }
+
   return (
     <div className="flex flex-col lg:flex-row bg-background min-h-screen">
       <aside
@@ -65,27 +95,28 @@ const Home: NextPage = () => {
         >
           <Image src={logoImg} alt="Logotipo Let Me Ask" />
 
-          <Link href="/new-room">
-            <a
-              className="
-                flex items-center justify-center
-                mt-7 lg:mt-14
-                px-6 h-14
-                bg-[#EA4335] rounded-lg
-                text-white font-medium
-                transition transform motion-reduce:transform-none
-                hover:scale-105 hover:brightness-110
-                disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100"
-            >
-              <Image
-                src={googleIconImg}
-                alt="Logotipo do Google"
-                width={24}
-                height={24}
-              />
-              <span className="ml-2">Crie sua sala com o Google</span>
-            </a>
-          </Link>
+          <button
+            onPointerDown={(e) => {
+              e.preventDefault(), signIn()
+            }}
+            className="
+              flex items-center justify-center
+              mt-7 lg:mt-14
+              px-6 h-14
+              bg-[#EA4335] rounded-lg
+              text-white font-medium
+              transition transform motion-reduce:transform-none
+              hover:scale-105 hover:brightness-110
+              disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100"
+          >
+            <Image
+              src={googleIconImg}
+              alt="Logotipo do Google"
+              width={24}
+              height={24}
+            />
+            <span className="ml-2">Crie sua sala com o Google</span>
+          </button>
 
           <span className="flex items-center my-8">
             <span className="flex-1 h-px bg-gray-medium"></span>
