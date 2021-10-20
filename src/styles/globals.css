@@ -1,6 +1,7 @@
-* {
-  @apply box-border;
-}
+/*
+ * Tailwind CSS has the Preflight
+ * https://tailwindcss.com/docs/preflight
+ */
 
 html,
 body {

@@ -15,10 +15,8 @@ module.exports = {
     },
     colors: {
       transparent:      'transparent',
-      white: {
-        DEFAULT:        '#FEFEFE',
-        'dark':         '#F8F8F8',
-      },
+      background:       '#F8F8F8',
+      white:            '#FEFEFE',
       black: {
         DEFAULT:        '#29292E',
         'dark':         '#050206',
@@ -41,9 +39,14 @@ module.exports = {
         'gray-light':   '#CECECE',
       }
     },
+    fontWeight: {
+      normal:     400,
+      medium:     500,
+      bold:       700,
+    },
     fontFamily: {
-      'roboto': ['Roboto', 'sans-serif'],
-      'poppins': ['Poppins', 'sans-serif'],
+      'roboto':   ['Roboto', 'sans-serif'],
+      'poppins':  ['Poppins', 'sans-serif'],
     },
     extend: {
       flex: {
