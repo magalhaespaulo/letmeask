@@ -22,6 +22,24 @@ export const AuthContext = createContext({} as AuthContextType)
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User>()
 
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const { displayName, photoURL, uid } = user
+
+        if (!displayName || !photoURL) {
+          throw new Error('Missing information from Google Account.')
+        }
+
+        setUser({
+          id: uid,
+          name: displayName,
+          avatar: photoURL,
+        })
+      }
+    })
+  }, [])
+
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
 
