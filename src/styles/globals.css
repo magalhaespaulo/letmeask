@@ -1,9 +1,8 @@
-html,
-body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+* {
+  @apply box-border;
 }
 
-* {
-  box-sizing: border-box;
+html,
+body {
+  @apply font-roboto text-black;
 }
