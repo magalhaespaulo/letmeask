@@ -2,14 +2,13 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { useContext } from 'react'
-import { AuthContext } from './_app'
+import { useAuth } from '../hooks/useAuth'
 
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 
 const NewRoom: NextPage = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
 
   return (
     <div className="flex flex-col lg:flex-row bg-background min-h-screen">

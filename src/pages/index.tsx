@@ -2,8 +2,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { useContext } from 'react'
-import { AuthContext } from './_app'
+import { useAuth } from '../hooks/useAuth'
 
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
@@ -12,8 +11,7 @@ import loginIconImg from '../../public/images/login.svg'
 
 const Home: NextPage = () => {
   const router = useRouter()
-
-  const { user, signInWithGoogle } = useContext(AuthContext)
+  const { user, signInWithGoogle } = useAuth()
 
   const signIn = async () => {
     if (!user) {
