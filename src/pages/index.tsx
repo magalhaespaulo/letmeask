@@ -2,40 +2,24 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
+import { useContext } from 'react'
+import { AuthContext } from './_app'
+
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 import googleIconImg from '../../public/images/google-icon.svg'
 import loginIconImg from '../../public/images/login.svg'
 
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import { auth } from '../services/firebase'
-
 const Home: NextPage = () => {
   const router = useRouter()
 
-  const signIn = () => {
-    const provider = new GoogleAuthProvider()
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential!.accessToken
-        // The signed-in user info.
-        const user = result.user
-        // ...
-        console.log(token, user)
-        router.push('/new-room')
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.email
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error)
-        // ...
-      })
+  const { user, signInWithGoogle } = useContext(AuthContext)
+
+  const signIn = async () => {
+    if (!user) {
+      await signInWithGoogle()
+    }
+    router.push('/new-room')
   }
 
   return (

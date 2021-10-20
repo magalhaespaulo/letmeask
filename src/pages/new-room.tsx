@@ -2,10 +2,15 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import { useContext } from 'react'
+import { AuthContext } from './_app'
+
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 
 const NewRoom: NextPage = () => {
+  const { user } = useContext(AuthContext)
+
   return (
     <div className="flex flex-col lg:flex-row bg-background min-h-screen">
       <aside
@@ -64,6 +69,15 @@ const NewRoom: NextPage = () => {
           <Image src={logoImg} alt="Logotipo Let Me Ask" />
 
           <h2 className="mt-14 mb-7 text-2xl text-center font-poppins font-bold">
+            {user?.name ? (
+              <div className="text-gray-dark text-base font-normal">
+                Olá, {user?.name}
+              </div>
+            ) : (
+              <div className="text-gray-dark text-base font-normal">
+                Vamos começar?
+              </div>
+            )}
             Crie uma nova sala
           </h2>
 
