@@ -1,9 +1,13 @@
 import type { NextPage } from 'next'
 import { Button } from '../components/Button'
 
+import { auth, database } from '../services/firebase'
+
 const Home: NextPage = () => {
   const action = (text: string) => {
     console.log(text)
+    console.log(auth)
+    console.log(database)
   }
 
   return (
