@@ -1,25 +1,20 @@
-import { PointerEventHandler, ReactNode } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 
-type ButtonProps = {
-  children?: ReactNode
-  click?: PointerEventHandler
-  className?: string
-  ariaLabel?: string
-}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button = (props: ButtonProps): JSX.Element => {
+export const Button = (props: ButtonProps) => {
   return (
     <button
-      className={`flex items-center justify-center
-                  px-4 py-2
-                  bg-gray-100 rounded
-                  text-black font-medium
-                  cursor-pointer select-none
-                  ${props.className || ''}`
-        .replace(/\s+/g, ' ')
-        .trim()}
-      aria-label={props.ariaLabel}
-      onPointerDown={props.click || (() => alert('Click undefined'))}
+      {...props}
+      className={`
+        flex items-center justify-center
+        px-6 h-14
+        bg-purple rounded-lg
+        text-white font-medium
+        transition transform motion-reduce:transform-none
+        hover:scale-105 hover:brightness-110
+        disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100
+        ${props.className || ''}`}
     >
       {props.children || 'Children undefined'}
     </button>

@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 
 import { useAuth } from '../hooks/useAuth'
 
+import { Button } from '../components/Button'
+
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 import googleIconImg from '../../public/images/google-icon.svg'
@@ -77,19 +79,11 @@ const Home: NextPage = () => {
         >
           <Image src={logoImg} alt="Logotipo Let Me Ask" />
 
-          <button
-            onPointerDown={(e) => {
+          <Button
+            className="mt-7 lg:mt-14 bg-[#EA4335]"
+            onClick={(e) => {
               e.preventDefault(), signIn()
             }}
-            className="
-              flex items-center justify-center
-              mt-7 lg:mt-14
-              px-6 h-14
-              bg-[#EA4335] rounded-lg
-              text-white font-medium
-              transition transform motion-reduce:transform-none
-              hover:scale-105 hover:brightness-110
-              disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100"
           >
             <Image
               src={googleIconImg}
@@ -98,7 +92,7 @@ const Home: NextPage = () => {
               height={24}
             />
             <span className="ml-2">Crie sua sala com o Google</span>
-          </button>
+          </Button>
 
           <span className="flex items-center my-8">
             <span className="flex-1 h-px bg-gray-medium"></span>
@@ -118,17 +112,7 @@ const Home: NextPage = () => {
                 border border-gray-medium
                 text-black"
             />
-            <button
-              type="submit"
-              className="
-                flex items-center justify-center
-                mt-5 px-6 h-14
-                bg-purple rounded-lg
-                text-white font-medium
-                transition transform motion-reduce:transform-none
-                hover:scale-105 hover:brightness-110
-                disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100"
-            >
+            <Button className="mt-5" type="submit">
               <Image
                 src={loginIconImg}
                 alt="Icone de entrada"
@@ -136,7 +120,7 @@ const Home: NextPage = () => {
                 height={24}
               />
               <span className="ml-2">Entrar na sala</span>
-            </button>
+            </Button>
           </form>
         </section>
       </main>

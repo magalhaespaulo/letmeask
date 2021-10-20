@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth'
 
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
+import { Button } from '../components/Button'
 
 const NewRoom: NextPage = () => {
   const { user } = useAuth()
@@ -90,19 +91,9 @@ const NewRoom: NextPage = () => {
                 border border-gray-medium
                 text-black"
             />
-            <button
-              type="submit"
-              className="
-                flex items-center justify-center
-                mt-5 px-6 h-14
-                bg-purple rounded-lg
-                text-white font-medium
-                transition transform motion-reduce:transform-none
-                hover:scale-105 hover:brightness-110
-                disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100"
-            >
+            <Button className="mt-5" type="submit">
               Criar sala
-            </button>
+            </Button>
           </form>
           <p className="mt-3 text-sm text-gray-dark text-center">
             Quer entrar em uma sala já existente?
