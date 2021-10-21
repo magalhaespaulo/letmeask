@@ -104,12 +104,7 @@ const Home: NextPage = () => {
         >
           <Image src={logoImg} alt="Logotipo Let Me Ask" />
 
-          <Button
-            className="mt-7 lg:mt-14 bg-[#EA4335]"
-            onClick={(e) => {
-              e.preventDefault(), signIn()
-            }}
-          >
+          <Button className="mt-7 lg:mt-14 bg-[#EA4335]" onClick={signIn}>
             <Image
               src={googleIconImg}
               alt="Logotipo do Google"

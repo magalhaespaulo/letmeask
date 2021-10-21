@@ -23,7 +23,6 @@ body {
 @layer components {
   /*
    * Hover and Active Animation
-   * You can set the colors when using
    */
 
   .hover-animation {
