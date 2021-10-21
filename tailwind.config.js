@@ -48,6 +48,9 @@ module.exports = {
       'roboto':   ['Roboto', 'sans-serif'],
       'poppins':  ['Poppins', 'sans-serif'],
     },
+    boxShadow: {
+      DEFAULT: '0px 2px 12px rgba(0, 0, 0, 0.04)',
+    },
     extend: {
       flex: {
         '2': '2 2 0%',
@@ -56,7 +59,7 @@ module.exports = {
         '5': '5 5 0%',
         '6': '6 6 0%',
         '7': '7 7 0%',
-      }
+      },
     },
   },
   variants: {

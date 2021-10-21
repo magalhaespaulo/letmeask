@@ -48,7 +48,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row bg-background min-h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen">
       <aside
         className="
           flex-6

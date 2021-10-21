@@ -5,5 +5,22 @@
 
 html,
 body {
-  @apply font-roboto text-black;
+  @apply font-roboto text-black bg-background;
+}
+
+/*
+ * Shared Link Style
+ * you can set the colors when using
+ *
+ * @example
+ * <a className="link-css ml-1 text-pink-dark border-pink-dark">
+ * or
+ * <button className="link-css mx-2 text-purple border-purple">
+ */
+
+.link-css {
+  @apply pb-px;
+  @apply border-b border-solid;
+  @apply transition duration-200 ease-linear;
+  @apply hover:brightness-110 hover:border-transparent;
 }

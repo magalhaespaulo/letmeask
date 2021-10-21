@@ -41,7 +41,7 @@ const NewRoom: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row bg-background min-h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen">
       <aside
         className="
           flex-6
@@ -129,14 +129,7 @@ const NewRoom: NextPage = () => {
           <p className="mt-3 text-sm text-gray-dark text-center">
             Quer entrar em uma sala já existente?
             <Link href="/">
-              <a
-                className="
-                  ml-1 pb-0.5
-                  text-pink-dark
-                  border-b border-pink-dark border-solid
-                  transition duration-200 ease-linear
-                  hover:brightness-110 hover:border-transparent"
-              >
+              <a className="link-css ml-1 text-pink-dark border-pink-dark">
                 Clique aqui
               </a>
             </Link>
