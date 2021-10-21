@@ -2,7 +2,11 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
+import { FormEvent, useState } from 'react'
+
 import { useAuth } from '../hooks/useAuth'
+import { database } from '../services/firebase'
+import { child, get, ref } from 'firebase/database'
 
 import { Button } from '../components/Button'
 
@@ -15,11 +19,32 @@ const Home: NextPage = () => {
   const router = useRouter()
   const { user, signInWithGoogle } = useAuth()
 
+  const [roomCode, setRoomCode] = useState('')
+
   const signIn = async () => {
     if (!user) {
       await signInWithGoogle()
     }
     router.push('/new-room')
+  }
+
+  const handleJoinRoom = async (event: FormEvent) => {
+    event.preventDefault()
+
+    const id = roomCode.trim()
+
+    if (id === '') {
+      return
+    }
+
+    const snapshot = await get(child(ref(database), `rooms/${id}`))
+
+    if (!snapshot.exists()) {
+      console.log('Room does not exists.')
+      return
+    }
+
+    router.push(`/room/${id}`)
   }
 
   return (
@@ -102,15 +127,17 @@ const Home: NextPage = () => {
             <span className="flex-1 h-px bg-gray-medium"></span>
           </span>
 
-          <form className="flex flex-col">
+          <form className="flex flex-col" onSubmit={handleJoinRoom}>
             <input
-              type="text"
-              placeholder="Digite o código da sala"
               className="
                 px-6 h-14
                 bg-white rounded-lg
                 border border-gray-medium
                 text-black"
+              type="text"
+              placeholder="Digite o código da sala"
+              onChange={(event) => setRoomCode(event.target.value)}
+              value={roomCode}
             />
             <Button className="mt-5" type="submit">
               <Image
