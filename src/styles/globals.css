@@ -3,24 +3,51 @@
  * https://tailwindcss.com/docs/preflight
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Globals
+ */
+
 html,
 body {
   @apply font-roboto text-black bg-background;
 }
 
 /*
- * Shared Link Style
- * you can set the colors when using
- *
- * @example
- * <a className="link-css ml-1 text-pink-dark border-pink-dark">
- * or
- * <button className="link-css mx-2 text-purple border-purple">
+ * Extending components directive
  */
 
-.link-css {
-  @apply pb-px;
-  @apply border-b border-solid;
-  @apply transition duration-200 ease-linear;
-  @apply hover:brightness-110 hover:border-transparent;
+@layer components {
+  /*
+   * Hover and Active Animation
+   * You can set the colors when using
+   */
+
+  .hover-animation {
+    @apply transition transform motion-reduce:transform-none;
+    @apply hover:scale-105 hover:brightness-110;
+    @apply active:scale-95 active:brightness-90;
+    @apply disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100;
+  }
+
+  /*
+   * Link Style
+   * You can set the colors when using
+   *
+   * @examples
+   *
+   * <a className="line-link ml-1 text-pink-dark border-pink-dark">
+   * or
+   * <button className="line-link mx-2 text-purple border-purple font-medium">
+   */
+
+  .line-link {
+    @apply pb-px;
+    @apply border-b border-solid;
+    @apply hover-animation;
+    @apply hover:border-transparent;
+  }
 }

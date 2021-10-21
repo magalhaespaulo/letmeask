@@ -11,9 +11,7 @@ export const Button = (props: ButtonProps) => {
         px-6 h-14
         bg-purple rounded-lg
         text-white font-medium
-        transition transform motion-reduce:transform-none
-        hover:scale-105 hover:brightness-110
-        disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:brightness-100
+        hover-animation
         ${props.className || ''}`}
     >
       {props.children || 'Children undefined'}

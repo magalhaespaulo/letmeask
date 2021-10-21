@@ -126,10 +126,10 @@ const NewRoom: NextPage = () => {
               Criar sala
             </Button>
           </form>
-          <p className="mt-3 text-sm text-gray-dark text-center">
+          <p className="flex items-center justify-center mt-3 text-sm text-gray-dark">
             Quer entrar em uma sala já existente?
             <Link href="/">
-              <a className="link-css ml-1 text-pink-dark border-pink-dark">
+              <a className="line-link ml-1 text-pink-dark border-pink-dark">
                 Clique aqui
               </a>
             </Link>
