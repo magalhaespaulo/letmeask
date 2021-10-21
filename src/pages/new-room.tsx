@@ -1,15 +1,44 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+import { FormEvent, useState } from 'react'
 
 import { useAuth } from '../hooks/useAuth'
+import { database } from '../services/firebase'
+import { push, ref } from 'firebase/database'
+
+import { Button } from '../components/Button'
 
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
-import { Button } from '../components/Button'
 
 const NewRoom: NextPage = () => {
+  const router = useRouter()
   const { user } = useAuth()
+
+  const [newRoom, setNewRoom] = useState('')
+
+  const handleCreateRoom = async (event: FormEvent) => {
+    event.preventDefault()
+
+    const title = newRoom.trim()
+    if (title === '') {
+      return
+    }
+
+    const roomData = {
+      title,
+      authorId: user?.id,
+    }
+
+    const roomsDatabaseRef = ref(database, 'rooms')
+
+    const roomKey = await push(roomsDatabaseRef, roomData).key
+
+    router.push(`/room/${roomKey}`)
+  }
 
   return (
     <div className="flex flex-col lg:flex-row bg-background min-h-screen">
@@ -81,15 +110,17 @@ const NewRoom: NextPage = () => {
             Crie uma nova sala
           </h2>
 
-          <form className="flex flex-col">
+          <form className="flex flex-col" onSubmit={handleCreateRoom}>
             <input
-              type="text"
-              placeholder="Nome da sala"
               className="
                 px-6 h-14
                 bg-white rounded-lg
                 border border-gray-medium
                 text-black"
+              type="text"
+              placeholder="Nome da sala"
+              onChange={(event) => setNewRoom(event.target.value)}
+              value={newRoom}
             />
             <Button className="mt-5" type="submit">
               Criar sala
