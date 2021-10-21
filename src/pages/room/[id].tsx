@@ -3,26 +3,90 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
-import { push, ref } from 'firebase/database'
+import { onValue, push, ref } from 'firebase/database'
 
 import { Button } from '../../components/Button'
 
 import logoImg from '../../../public/images/logo.svg'
-import userImg from '../../../public/images/user.svg'
 import likeImg from '../../../public/images/like.svg'
 import { RoomCode } from '../../components/RoomCode'
 
+type FirebaseQuestions = Record<
+  string,
+  {
+    content: string
+    author: {
+      name: string
+      avatar: string
+    }
+    isHighLighted: boolean
+    isAnswered: boolean
+  }
+>
+
+type Question = {
+  id: string
+  content: string
+  author: {
+    name: string
+    avatar: string
+  }
+  isHighLighted: boolean
+  isAnswered: boolean
+}
+
 const Room: NextPage = () => {
+  const { user } = useAuth()
   const router = useRouter()
   const { id } = router.query
+  const [newQuestion, setNewQuestion] = useState('')
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [title, setTitle] = useState('')
+
   const roomId = id as string
 
-  const { user } = useAuth()
+  useEffect(() => {
+    if (!roomId) {
+      return
+    }
 
-  const [newQuestion, setNewQuestion] = useState('')
+    const roomDatabaseRef = ref(database, `rooms/${roomId}`)
+
+    const unsubscribe = onValue(roomDatabaseRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        return
+      }
+
+      const databaseRoom = snapshot.val()
+      setTitle(databaseRoom.title)
+
+      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions
+      if (!firebaseQuestions) {
+        return
+      }
+
+      const parsedQuestions = Object.entries(firebaseQuestions).map(
+        ([key, value]) => {
+          return {
+            id: key,
+            content: value.content,
+            author: value.author,
+            isHighLighted: value.isHighLighted,
+            isAnswered: value.isAnswered,
+          }
+        }
+      )
+
+      setQuestions(parsedQuestions)
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [roomId])
 
   const handleSendQuestion = async (event: FormEvent) => {
     event.preventDefault()
@@ -78,10 +142,13 @@ const Room: NextPage = () => {
       </header>
       <main className="px-4 max-w-4xl mx-auto">
         <header className="my-10 flex items-center">
-          <h1 className="text-2xl font-poppins font-bold">Sala Next JS</h1>
-          <span className="ml-4 px-4 py-2 rounded-full text-white text-sm font-medium bg-pink-dark">
-            4 Perguntas
-          </span>
+          <h1 className="text-2xl font-poppins font-bold">Sala {title}</h1>
+          {questions.length > 0 && (
+            <span className="ml-4 px-4 py-2 rounded-full text-white text-sm font-medium bg-pink-dark">
+              {questions.length} Pergunta
+              {questions.length > 1 && 's'}
+            </span>
+          )}
         </header>
 
         <form onSubmit={handleSendQuestion}>
@@ -115,28 +182,36 @@ const Room: NextPage = () => {
           </footer>
         </form>
 
-        <article className="p-6 bg-white rounded-lg shadow">
-          <div>
-            Olá, eu gostaria de saber como criar um componente funcional dentro
-            do React e se existe diferença na perfomance entre um componente com
-            classes.
-          </div>
+        {questions.map((question) => {
+          return (
+            <article
+              key={question.id}
+              className="mb-4 p-6 bg-white rounded-lg shadow"
+            >
+              {question.content}
 
-          <div className="mt-8 flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="flex items-center justify-center mr-2 w-8 h-8 bg-purple rounded-full">
-                <Image src={userImg} alt="Avatar" width={16} height={16} />
+              <div className="mt-8 flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="flex items-center justify-center overflow-hidden mr-2 w-8 h-8 bg-gray-light rounded-full">
+                    <img
+                      src={question.author.avatar}
+                      alt={question.author.name}
+                    />
+                  </div>
+                  <div className="text-gray-dark text-sm">
+                    {question.author.name}
+                  </div>
+                </div>
+                <div className="flex items-end">
+                  <div className="text-gray-dark font-poppins">16</div>
+                  <button className="flex items-center justify-center w-10 h-8 hover-animation">
+                    <Image src={likeImg} alt="Like" />
+                  </button>
+                </div>
               </div>
-              <div className="text-gray-dark text-sm">Nome da Silva</div>
-            </div>
-            <div className="flex items-end">
-              <div className="text-gray-dark font-poppins">16</div>
-              <button className="flex items-center justify-center w-10 h-8 hover-animation">
-                <Image src={likeImg} alt="Like" />
-              </button>
-            </div>
-          </div>
-        </article>
+            </article>
+          )
+        })}
       </main>
     </>
   )
