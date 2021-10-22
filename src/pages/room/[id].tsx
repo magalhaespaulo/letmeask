@@ -118,13 +118,13 @@ const Room: NextPage = () => {
               <div className="flex items-center">
                 <div
                   className="
-                    overflow-hidden
+                    relative overflow-hidden
                     flex items-center justify-center
                     mr-2
                     w-8 h-8
                     bg-gray-light rounded-full"
                 >
-                  <img src={user.avatar} alt={user.name} />
+                  <Image src={user.avatar} alt={user.name} layout="fill" />
                 </div>
                 <div className="text-black text-sm font-medium">
                   {user.name}

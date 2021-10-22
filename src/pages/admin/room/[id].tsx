@@ -37,9 +37,9 @@ const AdminRoom: NextPage = () => {
               />
             </a>
           </Link>
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <RoomCode code={roomId} />
-            <Button className="ml-3 h-10 text-purple bg-white border border-purple border-solid">
+            <Button className="h-10 text-purple bg-white border border-purple border-solid">
               Encerrar sala
             </Button>
           </div>
