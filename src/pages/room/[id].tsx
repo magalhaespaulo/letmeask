@@ -11,8 +11,9 @@ import { onValue, push, ref } from 'firebase/database'
 import { Button } from '../../components/Button'
 
 import logoImg from '../../../public/images/logo.svg'
-import likeImg from '../../../public/images/like.svg'
 import { RoomCode } from '../../components/RoomCode'
+import { Question } from '../../components/Question'
+import { SpinnerSVG } from '../../components/SpinnerSVG'
 
 type FirebaseQuestions = Record<
   string,
@@ -140,6 +141,7 @@ const Room: NextPage = () => {
           <RoomCode code={roomId} />
         </div>
       </header>
+
       <main className="px-4 max-w-4xl mx-auto">
         <header className="my-10 flex items-center">
           <h1 className="text-2xl font-poppins font-bold">Sala {title}</h1>
@@ -150,18 +152,33 @@ const Room: NextPage = () => {
             </span>
           )}
         </header>
-
-        <form onSubmit={handleSendQuestion}>
+        <form className="mb-9" onSubmit={handleSendQuestion}>
           <textarea
-            className="resize-none p-5 w-full h-36 bg-white rounded-lg shadow"
+            className={`
+              resize-none
+              p-5
+              w-full h-36
+              bg-white rounded-lg shadow
+              ${animate}`}
             onChange={(event) => setNewQuestion(event.target.value)}
             value={newQuestion}
           />
 
-          <footer className="mt-4 mb-6 flex items-center justify-between">
+          <div
+            className="
+              flex items-center justify-between
+              mt-4"
+          >
             {user ? (
               <div className="flex items-center">
-                <div className="flex items-center justify-center overflow-hidden mr-2 w-8 h-8 bg-gray-light rounded-full">
+                <div
+                  className="
+                    overflow-hidden
+                    flex items-center justify-center
+                    mr-2
+                    w-8 h-8
+                    bg-gray-light rounded-full"
+                >
                   <img src={user.avatar} alt={user.name} />
                 </div>
                 <div className="text-black text-sm font-medium">
@@ -177,39 +194,22 @@ const Room: NextPage = () => {
               </span>
             )}
             <Button type="submit" disabled={!user}>
+              {loading && <SpinnerSVG className="-ml-1 mr-3" />}
               Enviar pergunta
             </Button>
-          </footer>
+          </div>
         </form>
 
         {questions.map((question) => {
           return (
-            <article
+            <Question
               key={question.id}
-              className="mb-4 p-6 bg-white rounded-lg shadow"
-            >
-              {question.content}
-
-              <div className="mt-8 flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="flex items-center justify-center overflow-hidden mr-2 w-8 h-8 bg-gray-light rounded-full">
-                    <img
-                      src={question.author.avatar}
-                      alt={question.author.name}
-                    />
-                  </div>
-                  <div className="text-gray-dark text-sm">
-                    {question.author.name}
-                  </div>
-                </div>
-                <div className="flex items-end">
-                  <div className="text-gray-dark font-poppins">16</div>
-                  <button className="flex items-center justify-center w-10 h-8 hover-animation">
-                    <Image src={likeImg} alt="Like" />
-                  </button>
-                </div>
-              </div>
-            </article>
+              className="mb-4 last:mb-0"
+              content={question.content}
+              author={question.author}
+              isHighLighted={question.isHighLighted}
+              isAnswered={question.isAnswered}
+            />
           )
         })}
       </main>
