@@ -18,7 +18,9 @@ export const RoomCode = (props: RoomCodeProps) => {
       {...props}
       className={`
         flex items-center
-        overflow-hidden rounded-lg
+        overflow-hidden
+        h-10
+        rounded-lg
         border boder-solid border-purple
         hover-animation
         ${props.className || ''}`}
@@ -27,7 +29,7 @@ export const RoomCode = (props: RoomCodeProps) => {
       <div
         className="
           flex items-center justify-center
-          w-11 h-10
+          w-11 h-full
           bg-purple"
       >
         <Image src={copyImg} alt="Copy room code" />
