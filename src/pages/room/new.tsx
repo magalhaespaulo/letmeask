@@ -3,20 +3,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 
-import { useAuth } from '../hooks/useAuth'
-import { database } from '../services/firebase'
+import { useAuth } from '../../hooks/useAuth'
+import { database } from '../../services/firebase'
 import { push, ref } from 'firebase/database'
-import { useAnimate } from '../hooks/useAnimate'
+import { useAnimate } from '../../hooks/useAnimate'
 
-import { Button } from '../components/Button'
+import { Button } from '../../components/Button'
 
-import { SpinnerSVG } from '../components/SpinnerSVG'
-import illustrationImg from '../../public/images/illustration.svg'
-import logoImg from '../../public/images/logo.svg'
+import { SpinnerSVG } from '../../components/SpinnerSVG'
+import illustrationImg from '../../../public/images/illustration.svg'
+import logoImg from '../../../public/images/logo.svg'
 
-const NewRoom: NextPage = () => {
+const RoomNew: NextPage = () => {
   const router = useRouter()
   const { user } = useAuth()
 
@@ -151,4 +151,4 @@ const NewRoom: NextPage = () => {
   )
 }
 
-export default NewRoom
+export default RoomNew

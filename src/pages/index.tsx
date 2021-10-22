@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       await signInWithGoogle()
     }
 
-    await router.push('/new-room')
+    await router.push('/room/new')
     setLoadingGoogle(false)
   }
 
