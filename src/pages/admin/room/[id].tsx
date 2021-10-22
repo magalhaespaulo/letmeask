@@ -14,13 +14,14 @@ import deleteImg from '../../../../public/images/delete.svg'
 
 import { database } from '../../../services/firebase'
 import { remove, ref, update } from '@firebase/database'
+import { SpinnerSVG } from '../../../components/SpinnerSVG'
 
 const AdminRoom: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
   const roomId = id as string
 
-  const { title, questions } = useRoom(roomId)
+  const { title, questions, isAdmin } = useRoom(roomId)
 
   const handleEndRoom = async () => {
     await update(ref(database, `rooms/${roomId}`), {
@@ -36,7 +37,15 @@ const AdminRoom: NextPage = () => {
     }
   }
 
-  return (
+  return !isAdmin ? (
+    <main className="flex items-center justify-center w-screen h-screen">
+      {!title ? (
+        <SpinnerSVG className="text-purple" />
+      ) : (
+        <h1>Somente o criador pode administrar a sala.</h1>
+      )}
+    </main>
+  ) : (
     <>
       <header className="border-b border-gray-light border-solid">
         <div

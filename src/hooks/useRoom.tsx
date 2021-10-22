@@ -40,6 +40,7 @@ type QuestionType = {
 
 export const useRoom = (roomId: string) => {
   const { user } = useAuth()
+  const [isAdmin, setIsAdmin] = useState(false)
   const [title, setTitle] = useState('')
   const [questions, setQuestions] = useState<QuestionType[]>([])
 
@@ -56,8 +57,6 @@ export const useRoom = (roomId: string) => {
       }
 
       const databaseRoom = snapshot.val()
-      setTitle(databaseRoom.title)
-
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
 
       const parsedQuestions = Object.entries(firebaseQuestions).map(
@@ -79,6 +78,11 @@ export const useRoom = (roomId: string) => {
         }
       )
 
+      if (databaseRoom.authorId === user?.id) {
+        setIsAdmin(true)
+      }
+
+      setTitle(databaseRoom.title)
       setQuestions(parsedQuestions)
     })
 
@@ -87,5 +91,5 @@ export const useRoom = (roomId: string) => {
     }
   }, [roomId, user?.id])
 
-  return { questions, title }
+  return { questions, title, isAdmin }
 }
