@@ -13,7 +13,7 @@ import logoImg from '../../../../public/images/logo.svg'
 import deleteImg from '../../../../public/images/delete.svg'
 
 import { database } from '../../../services/firebase'
-import { remove, ref } from '@firebase/database'
+import { remove, ref, update } from '@firebase/database'
 
 const AdminRoom: NextPage = () => {
   const router = useRouter()
@@ -21,6 +21,14 @@ const AdminRoom: NextPage = () => {
   const roomId = id as string
 
   const { title, questions } = useRoom(roomId)
+
+  const handleEndRoom = async () => {
+    await update(ref(database, `rooms/${roomId}`), {
+      closedAt: new Date(),
+    })
+
+    router.push('/')
+  }
 
   const handleDeleteQuestion = async (questionId: string) => {
     if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
@@ -49,7 +57,10 @@ const AdminRoom: NextPage = () => {
           </Link>
           <div className="flex items-center gap-4">
             <RoomCode code={roomId} />
-            <Button className="h-10 text-purple bg-white border border-purple border-solid">
+            <Button
+              className="h-10 text-purple bg-white border border-purple border-solid"
+              onClick={handleEndRoom}
+            >
               Encerrar sala
             </Button>
           </div>
