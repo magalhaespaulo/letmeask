@@ -3,91 +3,32 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
-import { onValue, push, ref } from 'firebase/database'
+import { push, ref } from 'firebase/database'
+
+import { useRoom } from '../../hooks/useRoom'
+import { useAnimate } from '../../hooks/useAnimate'
 
 import { Button } from '../../components/Button'
-
-import logoImg from '../../../public/images/logo.svg'
 import { RoomCode } from '../../components/RoomCode'
 import { Question } from '../../components/Question'
+
 import { SpinnerSVG } from '../../components/SpinnerSVG'
-
-type FirebaseQuestions = Record<
-  string,
-  {
-    content: string
-    author: {
-      name: string
-      avatar: string
-    }
-    isHighLighted: boolean
-    isAnswered: boolean
-  }
->
-
-type Question = {
-  id: string
-  content: string
-  author: {
-    name: string
-    avatar: string
-  }
-  isHighLighted: boolean
-  isAnswered: boolean
-}
+import logoImg from '../../../public/images/logo.svg'
 
 const Room: NextPage = () => {
   const { user } = useAuth()
   const router = useRouter()
   const { id } = router.query
-  const [newQuestion, setNewQuestion] = useState('')
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [title, setTitle] = useState('')
-
   const roomId = id as string
 
-  useEffect(() => {
-    if (!roomId) {
-      return
-    }
+  const { title, questions } = useRoom(roomId)
+  const [newQuestion, setNewQuestion] = useState('')
 
-    const roomDatabaseRef = ref(database, `rooms/${roomId}`)
-
-    const unsubscribe = onValue(roomDatabaseRef, (snapshot) => {
-      if (!snapshot.exists()) {
-        return
-      }
-
-      const databaseRoom = snapshot.val()
-      setTitle(databaseRoom.title)
-
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions
-      if (!firebaseQuestions) {
-        return
-      }
-
-      const parsedQuestions = Object.entries(firebaseQuestions).map(
-        ([key, value]) => {
-          return {
-            id: key,
-            content: value.content,
-            author: value.author,
-            isHighLighted: value.isHighLighted,
-            isAnswered: value.isAnswered,
-          }
-        }
-      )
-
-      setQuestions(parsedQuestions)
-    })
-
-    return () => {
-      unsubscribe()
-    }
-  }, [roomId])
+  const { animate, setAnimate } = useAnimate()
+  const [loading, setLoading] = useState(false)
 
   const handleSendQuestion = async (event: FormEvent) => {
     event.preventDefault()
@@ -95,12 +36,15 @@ const Room: NextPage = () => {
     const content = newQuestion.trim()
 
     if (content === '') {
+      setAnimate('animate-shake')
       return
     }
 
     if (!user) {
       throw new Error('You must be logged in')
     }
+
+    setLoading(true)
 
     const questionData = {
       content,
@@ -117,6 +61,7 @@ const Room: NextPage = () => {
     await push(questionsDatabaseRef, questionData)
 
     setNewQuestion('')
+    setLoading(false)
   }
 
   return (

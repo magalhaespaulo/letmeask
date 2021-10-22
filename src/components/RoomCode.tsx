@@ -24,10 +24,22 @@ export const RoomCode = (props: RoomCodeProps) => {
         ${props.className || ''}`}
       onClick={copyRoomCodeToClipboard}
     >
-      <div className="flex items-center justify-center w-11 h-10 bg-purple">
+      <div
+        className="
+          flex items-center justify-center
+          w-11 h-10
+          bg-purple"
+      >
         <Image src={copyImg} alt="Copy room code" />
       </div>
-      <span className="pl-3 pr-4 font-medium">Sala #{props.code}</span>
+      <span
+        className="
+          pl-3 pr-4
+          w-32 lg:w-auto truncate
+          font-medium"
+      >
+        Sala #{props.code}
+      </span>
     </button>
   )
 }

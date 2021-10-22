@@ -3,14 +3,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 import { useAuth } from '../hooks/useAuth'
 import { database } from '../services/firebase'
 import { push, ref } from 'firebase/database'
+import { useAnimate } from '../hooks/useAnimate'
 
 import { Button } from '../components/Button'
 
+import { SpinnerSVG } from '../components/SpinnerSVG'
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 
@@ -20,13 +22,19 @@ const NewRoom: NextPage = () => {
 
   const [newRoom, setNewRoom] = useState('')
 
+  const [loading, setLoading] = useState(false)
+  const { animate, setAnimate } = useAnimate()
+
   const handleCreateRoom = async (event: FormEvent) => {
     event.preventDefault()
 
     const title = newRoom.trim()
     if (title === '') {
+      setAnimate('animate-shake')
       return
     }
+
+    setLoading(true)
 
     const roomData = {
       title,
@@ -37,7 +45,8 @@ const NewRoom: NextPage = () => {
 
     const roomKey = await push(roomsDatabaseRef, roomData).key
 
-    router.push(`/room/${roomKey}`)
+    await router.push(`/room/${roomKey}`)
+    setLoading(false)
   }
 
   return (
@@ -112,17 +121,19 @@ const NewRoom: NextPage = () => {
 
           <form className="flex flex-col" onSubmit={handleCreateRoom}>
             <input
-              className="
+              className={`
                 px-6 h-14
                 bg-white rounded-lg
                 border border-gray-medium
                 text-black"
+                ${animate}`}
               type="text"
               placeholder="Nome da sala"
               onChange={(event) => setNewRoom(event.target.value)}
               value={newRoom}
             />
             <Button className="mt-5" type="submit">
+              {loading && <SpinnerSVG className="-ml-1 mr-3" />}
               Criar sala
             </Button>
           </form>

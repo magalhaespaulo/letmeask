@@ -4,16 +4,19 @@ import { useRouter } from 'next/router'
 
 import { FormEvent, useState } from 'react'
 
-import { useAuth } from '../hooks/useAuth'
 import { database } from '../services/firebase'
 import { child, get, ref } from 'firebase/database'
+
+import { useAuth } from '../hooks/useAuth'
+import { useAnimate } from '../hooks/useAnimate'
 
 import { Button } from '../components/Button'
 
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 import googleIconImg from '../../public/images/google-icon.svg'
-import loginIconImg from '../../public/images/login.svg'
+import signInIconImg from '../../public/images/signIn.svg'
+import { SpinnerSVG } from '../components/SpinnerSVG'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -21,11 +24,19 @@ const Home: NextPage = () => {
 
   const [roomCode, setRoomCode] = useState('')
 
+  const { animate, setAnimate } = useAnimate()
+  const [loadingJoinRoom, setLoadingJoinRoom] = useState(false)
+  const [loadingGoogle, setLoadingGoogle] = useState(false)
+
   const signIn = async () => {
+    setLoadingGoogle(true)
+
     if (!user) {
       await signInWithGoogle()
     }
-    router.push('/new-room')
+
+    await router.push('/new-room')
+    setLoadingGoogle(false)
   }
 
   const handleJoinRoom = async (event: FormEvent) => {
@@ -34,17 +45,22 @@ const Home: NextPage = () => {
     const id = roomCode.trim()
 
     if (id === '') {
+      setAnimate('animate-shake')
       return
     }
+
+    setLoadingJoinRoom(true)
 
     const snapshot = await get(child(ref(database), `rooms/${id}`))
 
     if (!snapshot.exists()) {
-      console.log('Room does not exists.')
+      setAnimate('animate-shake')
+      setLoadingJoinRoom(false)
       return
     }
 
-    router.push(`/room/${id}`)
+    await router.push(`/room/${id}`)
+    setLoadingJoinRoom(false)
   }
 
   return (
@@ -105,12 +121,16 @@ const Home: NextPage = () => {
           <Image src={logoImg} alt="Logotipo Let Me Ask" />
 
           <Button className="mt-7 lg:mt-14 bg-[#EA4335]" onClick={signIn}>
-            <Image
-              src={googleIconImg}
-              alt="Logotipo do Google"
-              width={24}
-              height={24}
-            />
+            {loadingGoogle ? (
+              <SpinnerSVG />
+            ) : (
+              <Image
+                src={googleIconImg}
+                alt="Logotipo do Google"
+                width={24}
+                height={24}
+              />
+            )}
             <span className="ml-2">Crie sua sala com o Google</span>
           </Button>
 
@@ -124,23 +144,28 @@ const Home: NextPage = () => {
 
           <form className="flex flex-col" onSubmit={handleJoinRoom}>
             <input
-              className="
+              className={`
                 px-6 h-14
                 bg-white rounded-lg
                 border border-gray-medium
                 text-black"
+                ${animate}`}
               type="text"
               placeholder="Digite o código da sala"
               onChange={(event) => setRoomCode(event.target.value)}
               value={roomCode}
             />
             <Button className="mt-5" type="submit">
-              <Image
-                src={loginIconImg}
-                alt="Icone de entrada"
-                width={24}
-                height={24}
-              />
+              {loadingJoinRoom ? (
+                <SpinnerSVG />
+              ) : (
+                <Image
+                  src={signInIconImg}
+                  alt="Icone de entrada"
+                  width={24}
+                  height={24}
+                />
+              )}
               <span className="ml-2">Entrar na sala</span>
             </Button>
           </form>
