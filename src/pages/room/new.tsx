@@ -124,7 +124,7 @@ const RoomNew: NextPage = () => {
               className={`
                 px-6 h-14
                 bg-white rounded-lg
-                border border-gray-medium
+                border border-gray
                 text-black"
                 ${animate}`}
               type="text"
@@ -140,7 +140,7 @@ const RoomNew: NextPage = () => {
           <p className="flex items-center justify-center mt-3 text-sm text-gray-dark">
             Quer entrar em uma sala já existente?
             <Link href="/">
-              <a className="line-link ml-1 text-pink-dark border-pink-dark">
+              <a className="line-link ml-1 text-pink border-pink">
                 Clique aqui
               </a>
             </Link>

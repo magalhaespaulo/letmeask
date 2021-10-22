@@ -17,27 +17,18 @@ module.exports = {
       transparent:      'transparent',
       background:       '#F8F8F8',
       white:            '#FEFEFE',
-      black: {
-        DEFAULT:        '#29292E',
-        'dark':         '#050206',
-      },
+      black:            '#29292E',
       gray: {
         'light':        '#DBDCDD',
-        'medium':       '#A8A8B3',
+        DEFAULT:        '#A8A8B3',
         'dark':         '#737380',
       },
-      purple:           '#835AFD',
-      danger:           '#E73F5D',
-      pink: {
-        'light':        '#D67EE2',
-        'dark':         '#E559F9',
+      purple: {
+        'light':        '#F4F0FF',
+        DEFAULT:        '#835AFD',
       },
-      hover: {
-        'purple':       '#6F4BD8',
-        'danger':       '#D73754',
-        'gray-medium':  '#7E7E86',
-        'gray-light':   '#CECECE',
-      }
+      pink:             '#E559F9',
+      red:              '#E73F5D',
     },
     fontWeight: {
       normal:     400,

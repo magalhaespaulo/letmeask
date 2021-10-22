@@ -15,7 +15,7 @@ import { Button } from '../components/Button'
 import illustrationImg from '../../public/images/illustration.svg'
 import logoImg from '../../public/images/logo.svg'
 import googleIconImg from '../../public/images/google-icon.svg'
-import signInIconImg from '../../public/images/signIn.svg'
+import signInImg from '../../public/images/signIn.svg'
 import { SpinnerSVG } from '../components/SpinnerSVG'
 
 const Home: NextPage = () => {
@@ -141,11 +141,11 @@ const Home: NextPage = () => {
           </Button>
 
           <span className="flex items-center my-8">
-            <span className="flex-1 h-px bg-gray-medium"></span>
-            <span className="flex-none mb-1 mx-5 text-gray-medium text-sm">
+            <span className="flex-1 h-px bg-gray"></span>
+            <span className="flex-none mb-1 mx-5 text-gray text-sm">
               ou entre em uma sala
             </span>
-            <span className="flex-1 h-px bg-gray-medium"></span>
+            <span className="flex-1 h-px bg-gray"></span>
           </span>
 
           <form className="flex flex-col" onSubmit={handleJoinRoom}>
@@ -153,7 +153,7 @@ const Home: NextPage = () => {
               className={`
                 px-6 h-14
                 bg-white rounded-lg
-                border border-gray-medium
+                border border-gray
                 text-black"
                 ${animate}`}
               type="text"
@@ -166,7 +166,7 @@ const Home: NextPage = () => {
                 <SpinnerSVG />
               ) : (
                 <Image
-                  src={signInIconImg}
+                  src={signInImg}
                   alt="Icone de entrada"
                   width={24}
                   height={24}
