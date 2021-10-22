@@ -110,6 +110,7 @@ const Room: NextPage = () => {
             </span>
           )}
         </header>
+
         <form className="mb-9" onSubmit={handleSendQuestion}>
           <textarea
             className={`
@@ -118,11 +119,12 @@ const Room: NextPage = () => {
               w-full h-36
               bg-white rounded-lg shadow
               ${animate}`}
+            placeholder="O que você quer perguntar?"
             onChange={(event) => setNewQuestion(event.target.value)}
             value={newQuestion}
           />
 
-          <div
+          <footer
             className="
               flex items-center justify-between
               mt-4"
@@ -155,7 +157,7 @@ const Room: NextPage = () => {
               {loading && <SpinnerSVG className="-ml-1 mr-3" />}
               Enviar pergunta
             </Button>
-          </div>
+          </footer>
         </form>
 
         {questions.map((question) => {

@@ -10,6 +10,10 @@ import { RoomCode } from '../../../components/RoomCode'
 import { Question } from '../../../components/Question'
 
 import logoImg from '../../../../public/images/logo.svg'
+import deleteImg from '../../../../public/images/delete.svg'
+
+import { database } from '../../../services/firebase'
+import { remove, ref } from '@firebase/database'
 
 const AdminRoom: NextPage = () => {
   const router = useRouter()
@@ -17,6 +21,12 @@ const AdminRoom: NextPage = () => {
   const roomId = id as string
 
   const { title, questions } = useRoom(roomId)
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
+      await remove(ref(database, `rooms/${roomId}/questions/${questionId}`))
+    }
+  }
 
   return (
     <>
@@ -66,7 +76,15 @@ const AdminRoom: NextPage = () => {
               author={question.author}
               isHighLighted={question.isHighLighted}
               isAnswered={question.isAnswered}
-            />
+            >
+              <button
+                className="hover-animation"
+                arial-label="Apagar pergunta"
+                onClick={() => handleDeleteQuestion(question.id)}
+              >
+                <Image src={deleteImg} alt="Apagar" width={24} height={24} />
+              </button>
+            </Question>
           )
         })}
       </main>
