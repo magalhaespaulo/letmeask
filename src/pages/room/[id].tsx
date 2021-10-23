@@ -16,7 +16,7 @@ import { Button } from '../../components/Button'
 import { RoomCode } from '../../components/RoomCode'
 import { Question } from '../../components/Question'
 
-import { SpinnerSVG } from '../../components/SpinnerSVG'
+import { SpinnerSVG } from '../../components/svg/SpinnerSVG'
 
 const Room: NextPage = () => {
   const { user, signInWithGoogle } = useAuth()
@@ -140,7 +140,7 @@ const Room: NextPage = () => {
             </Button>
           ) : (
             <Button
-              className="px-3 lg:px-6 h-10 text-purple bg-white border border-purple border-solid"
+              className="px-3 lg:px-6 h-10 text-purple bg-transparent border border-purple border-solid"
               onClick={handleEndRoom}
             >
               Encerrar&nbsp;<span className="hidden lg:inline">sala</span>

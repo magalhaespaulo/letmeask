@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { FormEvent, useState } from 'react'
@@ -11,12 +10,11 @@ import { useAuth } from '../hooks/useAuth'
 import { useAnimate } from '../hooks/useAnimate'
 
 import { Button } from '../components/Button'
-
-import illustrationImg from '../../public/images/illustration.svg'
-import logoImg from '../../public/images/logo.svg'
-import googleIconImg from '../../public/images/google-icon.svg'
-import signInImg from '../../public/images/signIn.svg'
-import { SpinnerSVG } from '../components/SpinnerSVG'
+import { LogotypeSVG } from '../components/svg/LogotypeSVG'
+import { IllustrationSVG } from '../components/svg/IllustrationSVG'
+import { SpinnerSVG } from '../components/svg/SpinnerSVG'
+import { SignInSVG } from '../components/svg/SignInSVG'
+import { GoogleIconSVG } from '../components/svg/GoogleIconSVG'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -77,15 +75,7 @@ const Home: NextPage = () => {
             flex flex-col items-start justify-center
             max-w-lg"
         >
-          <div className="relative w-full h-44 lg:h-96">
-            <Image
-              src={illustrationImg}
-              alt="illustration"
-              layout="fill"
-              objectFit="contain"
-              objectPosition="left"
-            />
-          </div>
+          <IllustrationSVG />
           <h1
             className="
               text-2xl lg:text-4xl
@@ -118,19 +108,15 @@ const Home: NextPage = () => {
             flex flex-col
             max-w-xs"
         >
-          <Image src={logoImg} alt="Logotipo Let Me Ask" />
+          <div className="flex items-center justify-center">
+            <LogotypeSVG />
+          </div>
 
-          <Button className="mt-7 lg:mt-14 bg-[#EA4335]" onClick={signIn}>
-            {loadingGoogle ? (
-              <SpinnerSVG />
-            ) : (
-              <Image
-                src={googleIconImg}
-                alt="Logotipo do Google"
-                width={24}
-                height={24}
-              />
-            )}
+          <Button
+            className="mt-7 lg:mt-14 text-white bg-[#EA4335]"
+            onClick={signIn}
+          >
+            {loadingGoogle ? <SpinnerSVG /> : <GoogleIconSVG />}
             <span className="ml-2">Crie sua sala com o Google</span>
           </Button>
 
@@ -156,16 +142,7 @@ const Home: NextPage = () => {
               value={roomCode}
             />
             <Button className="mt-5" type="submit">
-              {loadingJoinRoom ? (
-                <SpinnerSVG />
-              ) : (
-                <Image
-                  src={signInImg}
-                  alt="Icone de entrada"
-                  width={24}
-                  height={24}
-                />
-              )}
+              {loadingJoinRoom ? <SpinnerSVG /> : <SignInSVG />}
               <span className="ml-2">Entrar na sala</span>
             </Button>
           </form>

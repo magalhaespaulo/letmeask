@@ -16,7 +16,7 @@ export const RoomCode = (props: RoomCodeProps) => {
         flex items-center
         overflow-hidden
         h-10
-        bg-white rounded-lg
+        rounded-lg
         border boder-solid border-purple
         animate-hover
         ${props.className || ''}`}

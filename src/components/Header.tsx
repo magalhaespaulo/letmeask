@@ -1,11 +1,8 @@
 import Link from 'next/link'
-import Image from 'next/image'
-
 import { HTMLAttributes } from 'react'
+import { LogotypeSVG } from './svg/LogotypeSVG'
 
 import { useAuth } from '../hooks/useAuth'
-
-import logoImg from '../../public/images/logo.svg'
 
 type HeaderProps = HTMLAttributes<HTMLElement>
 
@@ -22,13 +19,8 @@ export const Header = (props: HeaderProps) => {
           ${props.className || ''}`}
       >
         <Link href="/">
-          <a className="mt-3">
-            <Image
-              src={logoImg}
-              alt="Logotipo Let Me Ask"
-              width={100}
-              height={50}
-            />
+          <a className="mt-1">
+            <LogotypeSVG className="h-[45px]" />
           </a>
         </Link>
         <div className="flex items-center gap-4">

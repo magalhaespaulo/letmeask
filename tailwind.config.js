@@ -5,7 +5,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/icons/**/*.{js,ts,jsx,tsx}'
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     screens: {
       sm: '480px',
@@ -29,6 +29,10 @@ module.exports = {
       },
       pink:             '#E559F9',
       red:              '#E73F5D',
+      gradient: {
+        '0':            '#485BFF',
+        '1':            '#FF59F8',
+      },
     },
     fontWeight: {
       normal:     400,

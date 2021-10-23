@@ -12,9 +12,9 @@ import { useAnimate } from '../../hooks/useAnimate'
 
 import { Button } from '../../components/Button'
 
-import { SpinnerSVG } from '../../components/SpinnerSVG'
-import illustrationImg from '../../../public/images/illustration.svg'
-import logoImg from '../../../public/images/logo.svg'
+import { SpinnerSVG } from '../../components/svg/SpinnerSVG'
+import { IllustrationSVG } from '../../components/svg/IllustrationSVG'
+import { LogotypeSVG } from '../../components/svg/LogotypeSVG'
 
 const RoomNew: NextPage = () => {
   const router = useRouter()
@@ -63,15 +63,7 @@ const RoomNew: NextPage = () => {
             flex flex-col items-start justify-center
             max-w-lg"
         >
-          <div className="relative w-full h-44 lg:h-96">
-            <Image
-              src={illustrationImg}
-              alt="illustration"
-              layout="fill"
-              objectFit="contain"
-              objectPosition="left"
-            />
-          </div>
+          <IllustrationSVG />
           <h1
             className="
               text-2xl lg:text-4xl
@@ -104,7 +96,9 @@ const RoomNew: NextPage = () => {
             flex flex-col
             max-w-xs"
         >
-          <Image src={logoImg} alt="Logotipo Let Me Ask" />
+          <div className="flex items-center justify-center">
+            <LogotypeSVG />
+          </div>
 
           <h2 className="mt-14 mb-7 text-2xl text-center font-poppins font-bold">
             {user?.name ? (
