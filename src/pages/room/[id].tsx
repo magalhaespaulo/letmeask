@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { FormEvent, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
-import { push, ref, remove } from 'firebase/database'
+import { push, ref, remove, update } from 'firebase/database'
 
 import { useRoom } from '../../hooks/useRoom'
 import { useAnimate } from '../../hooks/useAnimate'
@@ -24,12 +24,23 @@ const Room: NextPage = () => {
   const { id } = router.query
   const roomId = id as string
 
-  const { title, questions } = useRoom(roomId)
+  const { title, questions, isAdmin, isClosed } = useRoom(roomId)
   const [newQuestion, setNewQuestion] = useState('')
 
   const { animate, setAnimate } = useAnimate()
   const [loading, setLoading] = useState(false)
   const [loadingGoogle, setLoadingGoogle] = useState(false)
+
+  const signIn = async (event: FormEvent) => {
+    event.preventDefault()
+
+    setLoadingGoogle(true)
+
+    if (!user) {
+      await signInWithGoogle()
+    }
+    setLoadingGoogle(false)
+  }
 
   const handleSendQuestion = async (event: FormEvent) => {
     event.preventDefault()
@@ -78,26 +89,73 @@ const Room: NextPage = () => {
     }
   }
 
-  const signIn = async (event: FormEvent) => {
-    event.preventDefault()
+  // Admin
+  const handleOpenRoom = async () => {
+    await update(ref(database, `rooms/${roomId}`), {
+      closedAt: '',
+    })
+  }
 
-    setLoadingGoogle(true)
+  // Admin
+  const handleEndRoom = async () => {
+    await update(ref(database, `rooms/${roomId}`), {
+      closedAt: new Date(),
+    })
+  }
 
-    if (!user) {
-      await signInWithGoogle()
+  // Admin
+  const handleCheckQuestionAnswered = async (
+    questionId: string,
+    previousValue: boolean
+  ) => {
+    await update(ref(database, `rooms/${roomId}/questions/${questionId}`), {
+      isAnswered: !previousValue,
+    })
+  }
+
+  // Admin
+  const handleHighlightQuestion = async (
+    questionId: string,
+    previousValue: boolean
+  ) => {
+    await update(ref(database, `rooms/${roomId}/questions/${questionId}`), {
+      isHighLighted: !previousValue,
+    })
+  }
+
+  // Admin
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
+      await remove(ref(database, `rooms/${roomId}/questions/${questionId}`))
     }
-    setLoadingGoogle(false)
   }
 
   return (
     <>
       <Header>
         <RoomCode code={roomId} />
+        {isAdmin &&
+          (isClosed ? (
+            <Button className="h-10" onClick={handleOpenRoom}>
+              Abrir sala
+            </Button>
+          ) : (
+            <Button
+              className="h-10 text-purple bg-white border border-purple border-solid"
+              onClick={handleEndRoom}
+            >
+              Encerrar sala
+            </Button>
+          ))}
       </Header>
 
       <main className="px-4 pb-20 max-w-4xl mx-auto">
         <header className="my-10 flex items-center">
-          <h1 className="text-2xl font-poppins font-bold">Sala {title}</h1>
+          <h1 className="text-lg font-poppins font-bold">
+            Sala&nbsp;
+            <span className="text-2xl">{title}</span>
+            {isClosed && ' foi encerrada'}
+          </h1>
           {questions.length > 0 && (
             <span className="ml-4 px-4 py-2 rounded-full text-white text-sm font-medium bg-pink">
               {questions.length} Pergunta
@@ -106,64 +164,71 @@ const Room: NextPage = () => {
           )}
         </header>
 
-        <form className="mb-9" onSubmit={handleSendQuestion}>
-          <textarea
-            className={`
-              resize-none
-              p-5
-              w-full h-36
-              bg-white rounded-lg shadow
-              ${animate}`}
-            placeholder="O que você quer perguntar?"
-            onChange={(event) => setNewQuestion(event.target.value)}
-            value={newQuestion}
-          />
+        {!isClosed && (
+          <form className="mb-9" onSubmit={handleSendQuestion}>
+            <textarea
+              className={`
+                resize-none
+                p-5
+                w-full h-36
+                bg-white rounded-lg shadow
+                ${animate}`}
+              placeholder="O que você quer perguntar?"
+              onChange={(event) => setNewQuestion(event.target.value)}
+              value={newQuestion}
+            />
 
-          <footer
-            className="
-              flex items-center justify-between
-              mt-4"
-          >
-            {user ? (
-              <div className="flex items-center">
-                <div
+            <footer
+              className="
+                flex items-center justify-between
+                mt-4"
+            >
+              {user ? (
+                <div className="flex items-center">
+                  <div
+                    className="
+                      overflow-hidden
+                      flex items-center justify-center
+                      mr-2
+                      w-8 h-8
+                      bg-gray-light rounded-full"
+                  >
+                    <Image
+                      src={user.avatar}
+                      alt={user.name}
+                      width={32}
+                      height={32}
+                    />
+                  </div>
+                  <div className="text-black text-sm font-medium">
+                    {user.name}
+                  </div>
+                </div>
+              ) : (
+                <span
                   className="
-                    relative overflow-hidden
-                    flex items-center justify-center
-                    mr-2
-                    w-8 h-8
-                    bg-gray-light rounded-full"
+                    flex items-center
+                    text-gray-dark text-sm font-medium"
                 >
-                  <Image src={user.avatar} alt={user.name} layout="fill" />
-                </div>
-                <div className="text-black text-sm font-medium">
-                  {user.name}
-                </div>
-              </div>
-            ) : (
-              <span
-                className="
-                  flex items-center
-                  text-gray-dark text-sm font-medium"
-              >
-                Para enviar uma pergunta,
-                <button
-                  className="line-link ml-1 text-purple border-purple font-medium"
-                  onClick={(event) => signIn(event)}
-                >
-                  faça seu login
-                </button>
-                {loadingGoogle && (
-                  <SpinnerSVG className="-ml-r ml-3 text-purple" />
-                )}
-              </span>
-            )}
-            <Button type="submit" disabled={!user}>
-              {loading && <SpinnerSVG className="-ml-1 mr-3" />}
-              Enviar pergunta
-            </Button>
-          </footer>
-        </form>
+                  Para enviar uma pergunta,
+                  <button
+                    className="line-link ml-1 text-purple border-purple font-medium"
+                    onClick={(event) => signIn(event)}
+                  >
+                    faça seu login
+                  </button>
+                  {loadingGoogle && (
+                    <SpinnerSVG className="-ml-r ml-3 text-purple" />
+                  )}
+                </span>
+              )}
+              <Button type="submit" disabled={!user}>
+                {loading && <SpinnerSVG className="-ml-1 mr-3" />}
+                Enviar pergunta
+              </Button>
+            </footer>
+          </form>
+        )}
 
         {questions.map((question) => {
           return (
@@ -175,39 +240,147 @@ const Room: NextPage = () => {
               isHighLighted={question.isHighLighted}
               isAnswered={question.isAnswered}
             >
-              <div className="flex items-end">
-                {question.likeCount > 0 && (
-                  <span className="text-gray-dark font-poppins">
-                    {question.likeCount}
-                  </span>
-                )}
-                <button
-                  className={`
-                    flex items-center justify-center
-                    w-10 h-8
-                    hover-animation
-                    ${question.likeId ? 'text-purple' : 'text-gray-dark'}`}
-                  aria-label="Gostei"
-                  onClick={() =>
-                    handleLikeQuestion(question.id, question.likeId)
-                  }
-                  disabled={!user || question.isAnswered}
-                >
-                  <svg
-                    className="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
+              <div className="flex items-center gap-4">
+                <div className="flex items-end gap-2">
+                  {question.likeCount > 0 && (
+                    <span className="text-gray-dark font-poppins leading-none">
+                      {question.likeCount}
+                    </span>
+                  )}
+
+                  <button
+                    className={`
+                      hover-animation hover:text-pink disabled:hover:text-gray-dark
+                      ${question.likeId ? 'text-purple' : 'text-gray-dark'}`}
+                    aria-label="Gostei"
+                    onClick={() =>
+                      handleLikeQuestion(question.id, question.likeId)
+                    }
+                    disabled={!user || question.isAnswered || isClosed}
                   >
-                    <path
-                      d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                {isAdmin && (
+                  <>
+                    <button
+                      className={`
+                        hover-animation hover:text-pink ${
+                          question.isAnswered ? 'text-purple' : 'text-gray-dark'
+                        }`}
+                      arial-label="Marcar como respondida"
+                      onClick={() =>
+                        handleCheckQuestionAnswered(
+                          question.id,
+                          question.isAnswered
+                        )
+                      }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          cx="12.0003"
+                          cy="11.9998"
+                          r="9.00375"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8.44287 12.3391L10.6108 14.507L10.5968 14.493L15.4878 9.60193"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      className={`
+                        hover-animation hover:text-pink ${
+                          question.isHighLighted
+                            ? 'text-purple'
+                            : 'text-gray-dark'
+                        }`}
+                      arial-label="Destacar pergunta"
+                      onClick={() =>
+                        handleHighlightQuestion(
+                          question.id,
+                          question.isHighLighted
+                        )
+                      }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M12 17.9999H18C19.657 17.9999 21 16.6569 21 14.9999V6.99988C21 5.34288 19.657 3.99988 18 3.99988H6C4.343 3.99988 3 5.34288 3 6.99988V14.9999C3 16.6569 4.343 17.9999 6 17.9999H7.5V20.9999L12 17.9999Z"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      className="hover-animation hover:text-pink text-red"
+                      arial-label="Apagar pergunta"
+                      onClick={() => handleDeleteQuestion(question.id)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                      >
+                        <path
+                          d="M3 5.99988H5H21"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8 5.99988V3.99988C8 3.46944 8.21071 2.96074 8.58579 2.58566C8.96086 2.21059 9.46957 1.99988 10 1.99988H14C14.5304 1.99988 15.0391 2.21059 15.4142 2.58566C15.7893 2.96074 16 3.46944 16 3.99988V5.99988M19 5.99988V19.9999C19 20.5303 18.7893 21.039 18.4142 21.4141C18.0391 21.7892 17.5304 21.9999 17 21.9999H7C6.46957 21.9999 5.96086 21.7892 5.58579 21.4141C5.21071 21.039 5 20.5303 5 19.9999V5.99988H19Z"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </>
+                )}
               </div>
             </Question>
           )

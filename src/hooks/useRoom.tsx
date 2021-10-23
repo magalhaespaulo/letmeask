@@ -10,6 +10,7 @@ import { onValue, ref } from 'firebase/database'
 export const useRoom = (roomId: string) => {
   const { user } = useAuth()
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isClosed, setIsClosed] = useState(false)
   const [title, setTitle] = useState('')
   const [questions, setQuestions] = useState<QuestionType[]>([])
 
@@ -47,10 +48,8 @@ export const useRoom = (roomId: string) => {
         }
       )
 
-      if (databaseRoom.authorId === user?.id) {
-        setIsAdmin(true)
-      }
-
+      setIsAdmin(databaseRoom.authorId === user?.id)
+      setIsClosed(databaseRoom.closedAt ? true : false)
       setTitle(databaseRoom.title)
       setQuestions(orderQuestions(parsedQuestions))
     })
@@ -76,5 +75,5 @@ export const useRoom = (roomId: string) => {
     return [...questionsWithHighLight, ...questionsWithoutHighLight]
   }
 
-  return { questions, title, isAdmin }
+  return { title, questions, isClosed, isAdmin }
 }

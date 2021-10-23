@@ -59,12 +59,6 @@ const Home: NextPage = () => {
       return
     }
 
-    if (snapshot.val().closedAt) {
-      alert('Sala encerrada =/')
-      setLoadingJoinRoom(false)
-      return
-    }
-
     await router.push(`/room/${id}`)
     setLoadingJoinRoom(false)
   }

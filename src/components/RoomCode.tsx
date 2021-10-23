@@ -20,7 +20,7 @@ export const RoomCode = (props: RoomCodeProps) => {
         flex items-center
         overflow-hidden
         h-10
-        rounded-lg
+        bg-white rounded-lg
         border boder-solid border-purple
         hover-animation
         ${props.className || ''}`}
@@ -40,7 +40,7 @@ export const RoomCode = (props: RoomCodeProps) => {
           w-32 lg:w-auto truncate
           font-medium"
       >
-        Sala #{props.code}
+        {props.code}
       </span>
     </button>
   )
