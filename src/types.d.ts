@@ -7,6 +7,7 @@ export type User = {
 export type AuthContextType = {
   user: User | undefined
   signInWithGoogle: () => Promise<void>
+  signOutWithGoogle: () => Promise<void>
 }
 
 export type QuestionType = {

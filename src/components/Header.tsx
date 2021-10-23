@@ -1,12 +1,24 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+
 import { HTMLAttributes, ReactNode } from 'react'
+
+import { useAuth } from '../hooks/useAuth'
 
 import logoImg from '../../public/images/logo.svg'
 
 type HeaderProps = HTMLAttributes<HTMLElement> & { children: ReactNode }
 
 export const Header = (props: HeaderProps) => {
+  const router = useRouter()
+  const { user, signOutWithGoogle } = useAuth()
+
+  const handleSignOut = async () => {
+    await signOutWithGoogle()
+    router.push('/')
+  }
+
   return (
     <header className="border-b border-gray-light border-solid">
       <div
@@ -26,7 +38,14 @@ export const Header = (props: HeaderProps) => {
             />
           </a>
         </Link>
-        <div className="flex items-center gap-4">{props.children}</div>
+        <div className="flex items-center gap-4">
+          {props.children}
+          {user && (
+            <button className="hover-animation" onClick={handleSignOut}>
+              Sair
+            </button>
+          )}
+        </div>
       </div>
     </header>
   )

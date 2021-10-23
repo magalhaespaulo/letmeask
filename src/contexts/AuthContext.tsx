@@ -1,7 +1,7 @@
 import { AuthContextType, User } from '../types'
 
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, signOut } from '@firebase/auth'
 import { auth } from '../services/firebase'
 
 type AuthContextProviderProps = {
@@ -53,8 +53,13 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
     }
   }
 
+  const signOutWithGoogle = async () => {
+    await signOut(auth)
+    setUser(undefined)
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOutWithGoogle }}>
       {props.children}
     </AuthContext.Provider>
   )
