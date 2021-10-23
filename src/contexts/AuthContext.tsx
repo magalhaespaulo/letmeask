@@ -1,16 +1,8 @@
+import { AuthContextType, User } from '../types'
+
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 import { auth } from '../services/firebase'
-
-type User = {
-  id: string
-  name: string
-  avatar: string
-}
-type AuthContextType = {
-  user: User | undefined
-  signInWithGoogle: () => Promise<void>
-}
 
 type AuthContextProviderProps = {
   children: ReactNode

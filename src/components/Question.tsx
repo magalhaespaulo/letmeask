@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { HTMLAttributes, PropsWithChildren } from 'react'
 
-export type QuestionProps = HTMLAttributes<HTMLElement> &
+type QuestionProps = HTMLAttributes<HTMLElement> &
   PropsWithChildren<{
     content: string
     author: {

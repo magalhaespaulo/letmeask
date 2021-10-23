@@ -1,42 +1,11 @@
+import { FirebaseQuestions, QuestionType } from '../types'
+
 import { useEffect, useState } from 'react'
 
 import { useAuth } from './useAuth'
 
 import { database } from '../services/firebase'
 import { onValue, ref } from 'firebase/database'
-
-type FirebaseQuestions = Record<
-  string,
-  {
-    content: string
-    author: {
-      name: string
-      avatar: string
-    }
-    isHighLighted: boolean
-    isAnswered: boolean
-    likes: Record<
-      string,
-      {
-        authorId: string
-      }
-    >
-  }
->
-
-type QuestionType = {
-  id: string
-  content: string
-  author: {
-    name: string
-    avatar: string
-  }
-  isHighLighted: boolean
-  isAnswered: boolean
-  likeCount: number
-  // hasLiked: boolean
-  likeId: string | undefined
-}
 
 export const useRoom = (roomId: string) => {
   const { user } = useAuth()
