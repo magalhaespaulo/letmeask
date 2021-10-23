@@ -31,26 +31,29 @@ export const Question = (props: QuestionProps) => {
 
       <div
         className="
-          flex items-center justify-between
+          flex items-center justify-between gap-4
           mt-8"
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
           <div
             className="
-              relative overflow-hidden
+              overflow-hidden
+              flex-none
               flex items-center justify-center
-              mr-2 w-8 h-8
+              w-8 h-8
               bg-gray-light rounded-full"
           >
             <Image
               src={props.author.avatar}
               alt={props.author.name}
-              layout="fill"
+              width={32}
+              height={32}
             />
           </div>
           <div className="text-gray-dark text-sm">{props.author.name}</div>
         </div>
-        {props.children}
+
+        <div className="flex-none">{props.children}</div>
       </div>
     </article>
   )

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 
 import { HTMLAttributes, ReactNode } from 'react'
 
@@ -11,13 +10,7 @@ import logoImg from '../../public/images/logo.svg'
 type HeaderProps = HTMLAttributes<HTMLElement> & { children: ReactNode }
 
 export const Header = (props: HeaderProps) => {
-  const router = useRouter()
   const { user, signOutWithGoogle } = useAuth()
-
-  const handleSignOut = async () => {
-    await signOutWithGoogle()
-    router.push('/')
-  }
 
   return (
     <header className="border-b border-gray-light border-solid">
@@ -48,7 +41,7 @@ export const Header = (props: HeaderProps) => {
                 w-10 h-10
                 text-gray-dark
                 hover-animation hover:text-pink"
-              onClick={handleSignOut}
+              onClick={signOutWithGoogle}
             >
               <svg
                 fill="none"

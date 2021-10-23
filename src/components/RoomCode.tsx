@@ -36,8 +36,8 @@ export const RoomCode = (props: RoomCodeProps) => {
       </div>
       <span
         className="
+          hidden lg:inline
           pl-3 pr-4
-          w-32 lg:w-auto truncate
           font-medium"
       >
         {props.code}

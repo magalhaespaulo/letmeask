@@ -89,21 +89,22 @@ const Room: NextPage = () => {
     }
   }
 
-  // Admin
+  //
+  // Handles of Admin below
+  //
+
   const handleOpenRoom = async () => {
     await update(ref(database, `rooms/${roomId}`), {
       closedAt: '',
     })
   }
 
-  // Admin
   const handleEndRoom = async () => {
     await update(ref(database, `rooms/${roomId}`), {
       closedAt: new Date(),
     })
   }
 
-  // Admin
   const handleCheckQuestionAnswered = async (
     questionId: string,
     previousValue: boolean
@@ -113,7 +114,6 @@ const Room: NextPage = () => {
     })
   }
 
-  // Admin
   const handleHighlightQuestion = async (
     questionId: string,
     previousValue: boolean
@@ -123,7 +123,6 @@ const Room: NextPage = () => {
     })
   }
 
-  // Admin
   const handleDeleteQuestion = async (questionId: string) => {
     if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
       await remove(ref(database, `rooms/${roomId}/questions/${questionId}`))
@@ -137,27 +136,28 @@ const Room: NextPage = () => {
         {isAdmin &&
           (isClosed ? (
             <Button className="h-10" onClick={handleOpenRoom}>
-              Abrir sala
+              Abrir <span className="hidden lg:inline">sala</span>
             </Button>
           ) : (
             <Button
-              className="h-10 text-purple bg-white border border-purple border-solid"
+              className="px-3 lg:px-6 h-10 text-purple bg-white border border-purple border-solid"
               onClick={handleEndRoom}
             >
-              Encerrar sala
+              Encerrar <span className="hidden lg:inline">sala</span>
             </Button>
           ))}
       </Header>
 
       <main className="px-4 pb-20 max-w-4xl mx-auto">
-        <header className="my-10 flex items-center">
+        <header className="my-10 flex items-center flex-col lg:flex-row gap-4">
           <h1 className="text-lg font-poppins font-bold">
             Sala&nbsp;
             <span className="text-2xl">{title}</span>
             {isClosed && ' foi encerrada'}
           </h1>
+
           {questions.length > 0 && (
-            <span className="ml-4 px-4 py-2 rounded-full text-white text-sm font-medium bg-pink">
+            <span className="px-4 py-2 rounded-full text-white text-sm font-medium bg-pink">
               {questions.length} Pergunta
               {questions.length > 1 && 's'}
             </span>
@@ -179,19 +179,24 @@ const Room: NextPage = () => {
             />
 
             <footer
-              className="
-                flex items-center justify-between
-                mt-4"
+              className={`
+                flex justify-between gap-4
+                mt-4
+                ${
+                  !user
+                    ? 'flex-col lg:flex-row items-end lg:items-center'
+                    : 'items-center'
+                }`}
             >
               {user ? (
-                <div className="flex items-center">
+                <div className="flex items-center gap-3">
                   <div
                     className="
-                      overflow-hidden
-                      flex items-center justify-center
-                      mr-2
-                      w-8 h-8
-                      bg-gray-light rounded-full"
+                    overflow-hidden
+                    flex-none
+                    flex items-center justify-center
+                    w-8 h-8
+                    bg-gray-light rounded-full"
                   >
                     <Image
                       src={user.avatar}
@@ -200,9 +205,7 @@ const Room: NextPage = () => {
                       height={32}
                     />
                   </div>
-                  <div className="text-black text-sm font-medium">
-                    {user.name}
-                  </div>
+                  <div className="text-gray-dark text-sm">{user.name}</div>
                 </div>
               ) : (
                 <span
@@ -222,7 +225,7 @@ const Room: NextPage = () => {
                   )}
                 </span>
               )}
-              <Button type="submit" disabled={!user}>
+              <Button className="flex-none" type="submit" disabled={!user}>
                 {loading && <SpinnerSVG className="-ml-1 mr-3" />}
                 Enviar pergunta
               </Button>
