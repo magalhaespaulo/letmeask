@@ -38,6 +38,10 @@ $ git clone https://github.com/magalhaespaulo/letmeask
 $ cd letmeask
 ```
 
+Crie um projeto no [Firebase](https://firebase.google.com/) para disponibilizar um Realtime Database.
+
+Configure as variável de ambiente criando um `.env.local` seguindo o modelo `.env.example`.
+
 Para iniciá-lo, siga os passos abaixo:
 
 ```bash
@@ -45,12 +49,10 @@ Para iniciá-lo, siga os passos abaixo:
 $ yarn
 
 # Iniciar o projeto
-$ yarn start
+$ yarn dev
 ```
 
 O app estará disponível no seu browser pelo endereço http://localhost:3000.
-
-Lembrando que será necessário criar uma conta no [Firebase](https://firebase.google.com/) e um projeto para disponibilizar um Realtime Database.
 
 <br><br>
 
