@@ -40,7 +40,7 @@ export const Header = (props: HeaderProps) => {
                 -ml-2
                 w-10 h-10
                 text-gray-dark
-                hover-animation hover:text-pink"
+                animate-hover hover:text-pink"
               onClick={signOutWithGoogle}
             >
               <svg

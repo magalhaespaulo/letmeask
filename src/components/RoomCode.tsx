@@ -22,7 +22,7 @@ export const RoomCode = (props: RoomCodeProps) => {
         h-10
         bg-white rounded-lg
         border boder-solid border-purple
-        hover-animation
+        animate-hover
         ${props.className || ''}`}
       onClick={copyRoomCodeToClipboard}
     >

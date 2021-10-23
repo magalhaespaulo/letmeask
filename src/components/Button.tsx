@@ -11,7 +11,7 @@ export const Button = (props: ButtonProps) => {
         px-6 h-14
         bg-purple rounded-lg
         text-white font-medium
-        hover-animation
+        animate-hover
         ${props.className || ''}`}
     >
       {props.children || 'Children undefined'}

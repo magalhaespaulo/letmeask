@@ -284,7 +284,7 @@ const Room: NextPage = () => {
 
                   <button
                     className={`
-                      hover-animation hover:text-pink disabled:hover:text-gray-dark
+                      animate-hover hover:text-pink disabled:hover:text-gray-dark
                       ${question.likeId ? 'text-purple' : 'text-gray-dark'}`}
                     aria-label="Gostei"
                     onClick={() =>
@@ -314,7 +314,7 @@ const Room: NextPage = () => {
                   <>
                     <button
                       className={`
-                        hover-animation hover:text-pink ${
+                        animate-hover hover:text-pink ${
                           question.isAnswered ? 'text-purple' : 'text-gray-dark'
                         }`}
                       arial-label="Marcar como respondida"
@@ -353,7 +353,7 @@ const Room: NextPage = () => {
 
                     <button
                       className={`
-                        hover-animation hover:text-pink ${
+                        animate-hover hover:text-pink ${
                           question.isHighLighted
                             ? 'text-purple'
                             : 'text-gray-dark'
@@ -386,7 +386,7 @@ const Room: NextPage = () => {
                     </button>
 
                     <button
-                      className="hover-animation hover:text-pink text-red"
+                      className="animate-hover hover:text-pink text-red"
                       arial-label="Apagar pergunta"
                       onClick={() => handleDeleteQuestion(question.id)}
                     >

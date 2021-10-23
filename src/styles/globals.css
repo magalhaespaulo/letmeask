@@ -25,7 +25,7 @@ body {
    * Hover and Active Animation
    */
 
-  .hover-animation {
+  .animate-hover {
     @apply transition transform motion-reduce:transform-none;
     @apply hover:scale-105 hover:brightness-110;
     @apply active:scale-95 active:brightness-90;
@@ -46,38 +46,7 @@ body {
   .line-link {
     @apply pb-px;
     @apply border-b border-solid;
-    @apply hover-animation;
+    @apply animate-hover;
     @apply hover:border-transparent;
-  }
-
-  /*
-   * Shake animation
-   */
-
-  .animate-shake {
-    animation: shake 1s cubic-bezier(0.3, 0.07, 0.2, 0.97) both;
-  }
-
-  @keyframes shake {
-    10%,
-    90% {
-      transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-      transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-      transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-      transform: translate3d(4px, 0, 0);
-    }
   }
 }
