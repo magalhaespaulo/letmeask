@@ -136,97 +136,128 @@ const Room: NextPage = () => {
         {isAdmin &&
           (isClosed ? (
             <Button className="h-10" onClick={handleOpenRoom}>
-              Abrir <span className="hidden lg:inline">sala</span>
+              Abrir&nbsp;<span className="hidden lg:inline">sala</span>
             </Button>
           ) : (
             <Button
               className="px-3 lg:px-6 h-10 text-purple bg-white border border-purple border-solid"
               onClick={handleEndRoom}
             >
-              Encerrar <span className="hidden lg:inline">sala</span>
+              Encerrar&nbsp;<span className="hidden lg:inline">sala</span>
             </Button>
           ))}
       </Header>
 
       <main className="px-4 pb-20 max-w-4xl mx-auto">
-        <header className="my-10 flex items-center flex-col lg:flex-row gap-4">
-          <h1 className="text-lg font-poppins font-bold">
-            Sala&nbsp;
-            <span className="text-2xl">{title}</span>
-            {isClosed && ' foi encerrada'}
-          </h1>
+        {title ? (
+          <header className="my-10 flex items-center flex-col lg:flex-row gap-2">
+            <h1 className="text-lg font-poppins font-bold">
+              Sala {title}
+              {isClosed && ' foi encerrada'}
+            </h1>
 
-          {questions.length > 0 && (
-            <span className="px-4 py-2 rounded-full text-white text-sm font-medium bg-pink">
-              {questions.length} Pergunta
-              {questions.length > 1 && 's'}
+            {questions.length > 0 && (
+              <span className="px-4 py-2 rounded-full text-white text-sm font-medium bg-pink">
+                {questions.length} Pergunta
+                {questions.length > 1 && 's'}
+              </span>
+            )}
+          </header>
+        ) : (
+          // skeleton
+          <header className="animate-pulse my-10 flex items-center flex-col lg:flex-row gap-2">
+            <h1 className="text-lg text-gray font-poppins font-bold">
+              Carregando
+            </h1>
+            <span className="px-4 py-2 rounded-full text-transparent text-sm font-medium bg-gray-light">
+              0 Perguntas
             </span>
-          )}
-        </header>
+          </header>
+        )}
 
-        {!isClosed && (
-          <form className="mb-9" onSubmit={handleSendQuestion}>
-            <textarea
-              className={`
-                resize-none
-                p-5
-                w-full h-36
-                bg-white rounded-lg shadow
-                ${animate}`}
-              placeholder="O que você quer perguntar?"
-              onChange={(event) => setNewQuestion(event.target.value)}
-              value={newQuestion}
-            />
+        {title ? (
+          !isClosed && (
+            <form className="mb-9" onSubmit={handleSendQuestion}>
+              <textarea
+                className={`
+                    resize-none
+                    p-5
+                    w-full h-36
+                    bg-white rounded-lg shadow
+                    ${animate}`}
+                placeholder="O que você quer perguntar?"
+                onChange={(event) => setNewQuestion(event.target.value)}
+                value={newQuestion}
+              />
 
-            <footer
-              className={`
-                flex justify-between gap-4
-                mt-4
+              <footer
+                className={`
+                    flex justify-between gap-4
+                    mt-4
                 ${
                   !user
                     ? 'flex-col lg:flex-row items-end lg:items-center'
                     : 'items-center'
                 }`}
-            >
-              {user ? (
-                <div className="flex items-center gap-3">
-                  <div
-                    className="
-                    overflow-hidden
-                    flex-none
-                    flex items-center justify-center
-                    w-8 h-8
-                    bg-gray-light rounded-full"
-                  >
-                    <Image
-                      src={user.avatar}
-                      alt={user.name}
-                      width={32}
-                      height={32}
-                    />
+              >
+                {user ? (
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="
+                          overflow-hidden
+                          flex-none
+                          flex items-center justify-center
+                          w-8 h-8
+                          bg-gray-light rounded-full"
+                    >
+                      <Image
+                        src={user.avatar}
+                        alt={user.name}
+                        width={32}
+                        height={32}
+                      />
+                    </div>
+                    <div className="text-gray-dark text-sm">{user.name}</div>
                   </div>
-                  <div className="text-gray-dark text-sm">{user.name}</div>
-                </div>
-              ) : (
-                <span
-                  className="
-                    flex items-center
-                    text-gray-dark text-sm font-medium"
-                >
-                  Para enviar uma pergunta,
-                  <button
-                    className="line-link ml-1 text-purple border-purple font-medium"
-                    onClick={(event) => signIn(event)}
+                ) : (
+                  <span
+                    className="
+                        flex items-center
+                        text-gray-dark text-sm font-medium"
                   >
-                    faça seu login
-                  </button>
-                  {loadingGoogle && (
-                    <SpinnerSVG className="-ml-r ml-3 text-purple" />
-                  )}
-                </span>
-              )}
-              <Button className="flex-none" type="submit" disabled={!user}>
-                {loading && <SpinnerSVG className="-ml-1 mr-3" />}
+                    Para enviar uma pergunta,
+                    <button
+                      className="line-link ml-1 text-purple border-purple font-medium"
+                      onClick={(event) => signIn(event)}
+                    >
+                      faça seu login
+                    </button>
+                    {loadingGoogle && (
+                      <SpinnerSVG className="-ml-r ml-3 text-purple" />
+                    )}
+                  </span>
+                )}
+                <Button className="flex-none" type="submit" disabled={!user}>
+                  {loading && <SpinnerSVG className="-ml-1 mr-3" />}
+                  Enviar pergunta
+                </Button>
+              </footer>
+            </form>
+          )
+        ) : (
+          // skeleton
+          <form className="animate-pulse mb-9" onSubmit={handleSendQuestion}>
+            <textarea
+              disabled
+              className="resize-none p-5 w-full h-36 bg-white rounded-lg shadow"
+              placeholder="O que você quer perguntar?"
+            />
+            <footer className="flex justify-between gap-4 mt-4">
+              <div className="flex items-center gap-3">
+                <div className="overflow-hidden flex-none flex items-center justify-center w-8 h-8 bg-gray-light rounded-full"></div>
+                <div className="text-gray-dark text-sm">Carregando</div>
+              </div>
+              <Button disabled className="flex-none bg-gray text-transparent">
                 Enviar pergunta
               </Button>
             </footer>
@@ -237,7 +268,7 @@ const Room: NextPage = () => {
           return (
             <Question
               key={question.id}
-              className="mb-4 last:mb-0"
+              className="mb-4 last:mb-0 animate-fade"
               content={question.content}
               author={question.author}
               isHighLighted={question.isHighLighted}
