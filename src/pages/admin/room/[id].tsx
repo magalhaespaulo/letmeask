@@ -17,7 +17,14 @@ const AdminRoom: NextPage = () => {
   const { id } = router.query
   const roomId = id as string
 
-  const { title, questions, isAdmin } = useRoom(roomId)
+  const { title, questions, isAdmin, isClosed } = useRoom(roomId)
+
+  const handleOpenRoom = async () => {
+    await update(ref(database, `rooms/${roomId}`), {
+      closedAt: '',
+    })
+    router.reload()
+  }
 
   const handleEndRoom = async () => {
     await update(ref(database, `rooms/${roomId}`), {
@@ -63,12 +70,18 @@ const AdminRoom: NextPage = () => {
     <>
       <Header>
         <RoomCode code={roomId} />
-        <Button
-          className="h-10 text-purple bg-white border border-purple border-solid"
-          onClick={handleEndRoom}
-        >
-          Encerrar sala
-        </Button>
+        {isClosed ? (
+          <Button className="h-10" onClick={handleOpenRoom}>
+            Abrir sala
+          </Button>
+        ) : (
+          <Button
+            className="h-10 text-purple bg-white border border-purple border-solid"
+            onClick={handleEndRoom}
+          >
+            Encerrar sala
+          </Button>
+        )}
       </Header>
 
       <main className="px-4 pb-20 max-w-4xl mx-auto">
@@ -98,7 +111,7 @@ const AdminRoom: NextPage = () => {
                 </span>
 
                 <button
-                  className={`hover-animation ${
+                  className={`hover-animation hover:text-pink ${
                     question.isAnswered ? 'text-purple' : 'text-gray-dark'
                   }`}
                   arial-label="Marcar como respondida"
@@ -136,7 +149,7 @@ const AdminRoom: NextPage = () => {
                 </button>
 
                 <button
-                  className={`hover-animation ${
+                  className={`hover-animation hover:text-pink ${
                     question.isHighLighted ? 'text-purple' : 'text-gray-dark'
                   }`}
                   arial-label="Destacar pergunta"
@@ -164,7 +177,7 @@ const AdminRoom: NextPage = () => {
                 </button>
 
                 <button
-                  className="hover-animation text-red"
+                  className="hover-animation hover:text-pink text-red"
                   arial-label="Apagar pergunta"
                   onClick={() => handleDeleteQuestion(question.id)}
                 >
