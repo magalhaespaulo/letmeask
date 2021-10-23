@@ -83,13 +83,29 @@ export const useRoom = (roomId: string) => {
       }
 
       setTitle(databaseRoom.title)
-      setQuestions(parsedQuestions)
+      setQuestions(orderQuestions(parsedQuestions))
     })
 
     return () => {
       unsubscribe()
     }
   }, [roomId, user?.id])
+
+  const orderQuestions = (questions: QuestionType[]): Array<QuestionType> => {
+    const questionsWithHighLight: Array<QuestionType> = []
+    const questionsWithoutHighLight: Array<QuestionType> = []
+
+    questions.reverse()
+    questions.forEach((question) => {
+      if (question.isHighLighted) {
+        questionsWithHighLight.push(question)
+      } else {
+        questionsWithoutHighLight.push(question)
+      }
+    })
+
+    return [...questionsWithHighLight, ...questionsWithoutHighLight]
+  }
 
   return { questions, title, isAdmin }
 }

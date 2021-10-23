@@ -16,7 +16,16 @@ export type QuestionProps = HTMLAttributes<HTMLElement> &
 export const Question = (props: QuestionProps) => {
   return (
     <article
-      className={`p-6 bg-white rounded-lg shadow ${props.className || ''}`}
+      className={`
+        p-6
+        bg-white rounded-lg shadow
+        ${props.className || ''}
+        ${
+          props.isHighLighted &&
+          'bg-purple-light border border-purple borde-solid'
+        }
+        ${props.isAnswered && 'bg-gray-light'}
+        `}
     >
       {props.content}
 
