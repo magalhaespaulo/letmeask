@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { HTMLAttributes, ReactNode } from 'react'
+import { HTMLAttributes } from 'react'
 
 import { useAuth } from '../hooks/useAuth'
 
 import logoImg from '../../public/images/logo.svg'
 
-type HeaderProps = HTMLAttributes<HTMLElement> & { children: ReactNode }
+type HeaderProps = HTMLAttributes<HTMLElement>
 
 export const Header = (props: HeaderProps) => {
   const { user, signOutWithGoogle } = useAuth()
@@ -22,7 +22,7 @@ export const Header = (props: HeaderProps) => {
           ${props.className || ''}`}
       >
         <Link href="/">
-          <a>
+          <a className="mt-3">
             <Image
               src={logoImg}
               alt="Logotipo Let Me Ask"
