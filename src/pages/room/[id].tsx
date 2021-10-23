@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
+
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
@@ -11,12 +11,12 @@ import { push, ref, remove } from 'firebase/database'
 import { useRoom } from '../../hooks/useRoom'
 import { useAnimate } from '../../hooks/useAnimate'
 
+import { Header } from '../../components/Header'
 import { Button } from '../../components/Button'
 import { RoomCode } from '../../components/RoomCode'
 import { Question } from '../../components/Question'
 
 import { SpinnerSVG } from '../../components/SpinnerSVG'
-import logoImg from '../../../public/images/logo.svg'
 
 const Room: NextPage = () => {
   const { user } = useAuth()
@@ -77,28 +77,22 @@ const Room: NextPage = () => {
     }
   }
 
+  const signIn = async (event: FormEvent) => {
+    event.preventDefault()
+
+    setLoadingGoogle(true)
+
+    if (!user) {
+      await signInWithGoogle()
+    }
+    setLoadingGoogle(false)
+  }
+
   return (
     <>
-      <header className="border-b border-gray-light border-solid">
-        <div
-          className="
-            px-4 max-w-7xl mx-auto
-            h-28
-            flex items-center justify-between"
-        >
-          <Link href="/">
-            <a>
-              <Image
-                src={logoImg}
-                alt="Logotipo Let Me Ask"
-                width={100}
-                height={50}
-              />
-            </a>
-          </Link>
-          <RoomCode code={roomId} />
-        </div>
-      </header>
+      <Header>
+        <RoomCode code={roomId} />
+      </Header>
 
       <main className="px-4 pb-20 max-w-4xl mx-auto">
         <header className="my-10 flex items-center">
