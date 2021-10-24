@@ -17,19 +17,22 @@ export const Question = (props: QuestionProps) => {
   return (
     <article
       className={`
-        p-6 rounded-lg
-        ${
-          props.isHighLighted
-            ? 'bg-purple-light border border-purple borde-solid dark:bg-black-darkness'
-            : 'bg-white dark:bg-black-dark'
-        }
-        ${
-          props.isAnswered && !props.isHighLighted
-            ? 'opacity-60 dark:opacity-40'
-            : 'shadow'
-        }
+        relative overflow-hidden
+        p-6
+        bg-light-dark-alt
+        shadow rounded-lg
+        ${props.isHighLighted && 'border border-primary borde-solid'}
+        ${props.isAnswered && !props.isHighLighted && 'opacity-50'}
         ${props.className || ''}`}
     >
+      <span
+        className={`
+          ${
+            props.isHighLighted &&
+            'pointer-events-none absolute inset-0 bg-primary opacity-10'
+          }
+        `}
+      ></span>
       {props.content}
 
       <div

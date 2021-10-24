@@ -60,8 +60,9 @@ O app estará disponível no seu browser pelo endereço http://localhost:3000.
 
 Este é um projeto desenvolvido durante a **[Next Level Week Together](https://nextlevelweek.com/)**, apresentada dos dias 20 a 27 de Junho de 2021.
 
-Além do desenvolvimento proposto, foi adicionardo funcionalidades extras:
+Além do desenvolvimento proposto, foi adicionado funcionalidades extras:
 
+- `Temas`
 - `Modo escuro`
 - `Responsividade`
 - `Micro Interações`
@@ -82,4 +83,4 @@ Lembrando que você precisa ter uma conta no [Figma](http://figma.com/).
 
 # 📝 License
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.

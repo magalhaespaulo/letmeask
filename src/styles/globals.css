@@ -1,13 +1,21 @@
 /*
- * This project use Just-in-Time Mode
- * https://tailwindcss.com/docs/just-in-time-mode
  *
- * Utility classes can NEVER be dynamic values.
+ * Configure the Design System in:
+ * tailwind.config.js
+ * not here =)
+ */
+
+/*
+ * This project use Just-in-Time Mode and
+ * utility classes can NEVER be dynamic values.
  *
  * For example, instead of:
  *    className={`text-${small ? 'sm' : 'lg'}`}
  * Use:
  *    className={small ? 'text-sm' : 'text-lg'}
+ *
+ * See more:
+ * https://tailwindcss.com/docs/just-in-time-mode
  */
 
 /*
@@ -20,20 +28,66 @@
 @tailwind utilities;
 
 /*
+ * Variables for [data-theme]
+ * shared between Themes and Dark Mode
+ */
+
+:root {
+  --text: theme('colors.black.DEFAULT');
+  --background: theme('colors.background');
+  --background-alt: theme('colors.white');
+  --border-color: theme('colors.gray.light');
+}
+
+[data-theme~='dark'] {
+  --text: theme('colors.white');
+  --background: theme('colors.black.DEFAULT');
+  --background-alt: theme('colors.black.dark');
+  --border-color: theme('colors.black.dark');
+}
+
+[data-theme~='purple'] {
+  --primary: theme('colors.purpleTheme.primary');
+  --secondary: theme('colors.purpleTheme.secondary');
+}
+
+[data-theme~='orange'] {
+  --primary: theme('colors.orangeTheme.primary');
+  --secondary: theme('colors.orangeTheme.secondary');
+}
+
+[data-theme~='blue'] {
+  --primary: theme('colors.blueTheme.primary');
+  --secondary: theme('colors.blueTheme.secondary');
+}
+
+/*
  * Globals
  */
 
 body {
-  @apply font-roboto text-black bg-background;
-  @apply dark:bg-black dark:text-white;
-  @apply min-h-screen;
+  @apply font-roboto min-h-screen;
+  color: var(--text);
+  background-color: var(--background);
 }
 
 /*
- * Extending components directive
+ * Extending Tailwind CSS Components directive
  */
 
 @layer components {
+  /*
+   * Dark Mode
+   */
+
+  .bg-light-dark-alt {
+    background-color: var(--background-alt);
+  }
+
+  .border-light-dark {
+    border-color: var(--border-color);
+  }
+
   /*
    * Hover and Active Animation
    */
@@ -46,14 +100,13 @@ body {
   }
 
   /*
-   * Link Style
-   * You can set the colors when using
+   * Link
+   * Set the colors when using
    *
-   * @examples
-   *
-   * <a className="line-link ml-1 text-pink border-pink">
+   * For example:
+   * <a className="line-link ml-1 text-secondary border-secondary">
    * or
-   * <button className="line-link mx-2 text-purple border-purple font-medium">
+   * <button className="line-link mx-2 text-primary border-primary font-medium">
    */
 
   .line-link {
@@ -64,25 +117,25 @@ body {
   }
 
   /*
-   * Input Style
+   * Input
    */
 
   input {
     @apply px-6 h-14;
-    @apply bg-white rounded-lg;
-    @apply border border-gray;
-    @apply text-black dark:text-black;
+    @apply rounded-lg;
+    @apply border border-solid border-light-dark;
+    @apply bg-light-dark-alt;
   }
 
   /*
-   * Textarea Style
+   * Textarea
    */
 
   textarea {
     @apply resize-none;
     @apply p-5;
     @apply w-full h-36;
-    @apply bg-white rounded-lg shadow;
-    @apply text-black dark:text-black;
+    @apply rounded-lg shadow;
+    @apply bg-light-dark-alt;
   }
 }

@@ -2,10 +2,10 @@ import { ButtonHTMLAttributes, PropsWithChildren } from 'react'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   PropsWithChildren<{
-    small?: boolean
-    outline?: boolean
-    danger?: boolean
-    google?: boolean
+    small?: string
+    outline?: string
+    danger?: string
+    google?: string
   }>
 
 export const Button = (props: ButtonProps) => {
@@ -31,7 +31,9 @@ export const Button = (props: ButtonProps) => {
           // default
           !props.danger &&
           !props.google &&
-          (props.outline ? 'text-purple border-purple' : 'text-white bg-purple')
+          (props.outline
+            ? 'text-primary border-primary'
+            : 'text-white bg-primary')
         }
         ${props.className || ''}`}
     >

@@ -51,10 +51,10 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           y2="53.1105"
           gradientUnits="userSpaceOnUse"
         >
-          <stop className="text-gradient-0" stopColor="currentColor" />
+          <stop className="text-primary" stopColor="currentColor" />
           <stop
             offset="0.96"
-            className="text-gradient-1"
+            className="text-secondary"
             stopColor="currentColor"
           />
         </linearGradient>
@@ -66,10 +66,10 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           y2="53.1105"
           gradientUnits="userSpaceOnUse"
         >
-          <stop className="text-gradient-0" stopColor="currentColor" />
+          <stop className="text-primary" stopColor="currentColor" />
           <stop
             offset="0.96"
-            className="text-gradient-1"
+            className="text-secondary"
             stopColor="currentColor"
           />
         </linearGradient>
@@ -81,10 +81,10 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           y2="53.1105"
           gradientUnits="userSpaceOnUse"
         >
-          <stop className="text-gradient-0" stopColor="currentColor" />
+          <stop className="text-primary" stopColor="currentColor" />
           <stop
             offset="0.96"
-            className="text-gradient-1"
+            className="text-secondary"
             stopColor="currentColor"
           />
         </linearGradient>
@@ -96,10 +96,10 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           y2="77.547"
           gradientUnits="userSpaceOnUse"
         >
-          <stop className="text-gradient-0" stopColor="currentColor" />
+          <stop className="text-primary" stopColor="currentColor" />
           <stop
             offset="0.96"
-            className="text-gradient-1"
+            className="text-secondary"
             stopColor="currentColor"
           />
         </linearGradient>

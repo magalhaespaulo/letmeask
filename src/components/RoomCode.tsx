@@ -17,7 +17,7 @@ export const RoomCode = (props: RoomCodeProps) => {
         overflow-hidden
         h-10
         rounded-lg
-        border boder-solid border-purple
+        border boder-solid border-primary
         animate-hover
         ${props.className || ''}`}
       onClick={copyRoomCodeToClipboard}
@@ -26,8 +26,8 @@ export const RoomCode = (props: RoomCodeProps) => {
         className="
           flex items-center justify-center
           w-11 h-full
-          lg:bg-purple
-          text-purple lg:text-white"
+          lg:bg-primary
+          text-primary lg:text-white"
       >
         <svg
           width="20"

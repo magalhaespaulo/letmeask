@@ -68,7 +68,7 @@ const Home: NextPage = () => {
           flex-6
           flex items-center justify-center
           p-5
-          bg-purple"
+          bg-primary"
       >
         <section
           className="
@@ -112,7 +112,7 @@ const Home: NextPage = () => {
             <LogotypeSVG />
           </div>
 
-          <Button google className="mt-7 lg:mt-14" onClick={signIn}>
+          <Button google="true" className="mt-7 lg:mt-14" onClick={signIn}>
             {loadingGoogle ? <SpinnerSVG /> : <GoogleIconSVG />}
             <span className="ml-2">Crie sua sala com o Google</span>
           </Button>

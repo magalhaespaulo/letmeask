@@ -5,7 +5,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/icons/**/*.{js,ts,jsx,tsx}'
   ],
-  darkMode: 'class',
+  darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
       sm: '480px',
@@ -14,30 +14,37 @@ module.exports = {
       xl: '1440px',
     },
     colors: {
+      primary:          'var(--primary)',
+      secondary:        'var(--secondary)',
       transparent:      'transparent',
       background:       '#F8F8F8',
       white:            '#FEFEFE',
       black: {
         DEFAULT:        '#29292E',
         'dark':         '#222222',
-        'darkness':     '#171819',
       },
       gray: {
         'light':        '#DBDCDD',
         DEFAULT:        '#A8A8B3',
         'dark':         '#737380',
       },
-      purple: {
-        'light':        '#F4F0FF',
-        DEFAULT:        '#835AFD',
-      },
-      pink:             '#E559F9',
       red:              '#E73F5D',
-      gradient: {
-        '0':            '#485BFF',
-        '1':            '#FF59F8',
-      },
       google:           '#EA4335',
+      // Purple
+      purpleTheme: {
+        primary:        '#835AFD',
+        secondary:      '#E559F9',
+      },
+      // Orange
+      orangeTheme: {
+        primary:        '#FD5A5A',
+        secondary:      '#F99C59',
+      },
+      // Blue
+      blueTheme: {
+        primary:        '#5AAFFD',
+        secondary:      '#54FF98',
+      },
     },
     fontWeight: {
       normal:     400,

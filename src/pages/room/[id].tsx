@@ -135,12 +135,12 @@ const Room: NextPage = () => {
         <RoomCode code={roomId} />
         {isAdmin &&
           (isClosed ? (
-            <Button small onClick={handleOpenRoom}>
-              Abrir<span className="hidden lg:inline">&nbsp;sala</span>
+            <Button small="true" onClick={handleOpenRoom}>
+              A<span className="hidden lg:inline">brir&nbsp;sala</span>
             </Button>
           ) : (
-            <Button small outline onClick={handleEndRoom}>
-              Encerrar<span className="hidden lg:inline">&nbsp;sala</span>
+            <Button small="true" outline="true" onClick={handleEndRoom}>
+              E<span className="hidden lg:inline">ncerrar&nbsp;sala</span>
             </Button>
           ))}
       </Header>
@@ -154,7 +154,7 @@ const Room: NextPage = () => {
             </h1>
 
             {questions.length > 0 && (
-              <span className="px-4 py-2 rounded-full text-white text-sm font-medium bg-pink">
+              <span className="px-4 py-2 rounded-full text-white text-sm font-medium bg-secondary">
                 {questions.length} Pergunta
                 {questions.length > 1 && 's'}
               </span>
@@ -219,13 +219,13 @@ const Room: NextPage = () => {
                   >
                     Para enviar uma pergunta,
                     <button
-                      className="line-link ml-1 text-purple border-purple font-medium"
+                      className="line-link ml-1 text-primary border-primary font-medium"
                       onClick={(event) => signIn(event)}
                     >
                       faça seu login
                     </button>
                     {loadingGoogle && (
-                      <SpinnerSVG className="-ml-r ml-3 text-purple" />
+                      <SpinnerSVG className="-ml-r ml-3 text-primary" />
                     )}
                   </span>
                 )}
@@ -276,8 +276,8 @@ const Room: NextPage = () => {
 
                   <button
                     className={`
-                      animate-hover hover:text-pink disabled:hover:text-gray-dark
-                      ${question.likeId ? 'text-purple' : 'text-gray-dark'}`}
+                      animate-hover hover:text-secondary disabled:hover:text-gray-dark
+                      ${question.likeId ? 'text-primary' : 'text-gray-dark'}`}
                     aria-label="Gostei"
                     onClick={() =>
                       handleLikeQuestion(question.id, question.likeId)
@@ -306,8 +306,10 @@ const Room: NextPage = () => {
                   <>
                     <button
                       className={`
-                        animate-hover hover:text-pink ${
-                          question.isAnswered ? 'text-purple' : 'text-gray-dark'
+                        animate-hover hover:text-secondary ${
+                          question.isAnswered
+                            ? 'text-primary'
+                            : 'text-gray-dark'
                         }`}
                       arial-label="Marcar como respondida"
                       onClick={() =>
@@ -345,9 +347,9 @@ const Room: NextPage = () => {
 
                     <button
                       className={`
-                        animate-hover hover:text-pink ${
+                        animate-hover hover:text-secondary ${
                           question.isHighLighted
-                            ? 'text-purple'
+                            ? 'text-primary'
                             : 'text-gray-dark'
                         }`}
                       arial-label="Destacar pergunta"
@@ -378,7 +380,7 @@ const Room: NextPage = () => {
                     </button>
 
                     <button
-                      className="animate-hover hover:text-pink text-red"
+                      className="animate-hover hover:text-secondary text-red"
                       arial-label="Apagar pergunta"
                       onClick={() => handleDeleteQuestion(question.id)}
                     >

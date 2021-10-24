@@ -55,7 +55,7 @@ const RoomNew: NextPage = () => {
           flex-6
           flex items-center justify-center
           p-5
-          bg-purple"
+          bg-primary"
       >
         <section
           className="
@@ -128,7 +128,7 @@ const RoomNew: NextPage = () => {
           <p className="flex items-center justify-center mt-3 text-sm text-gray-dark">
             Quer entrar em uma sala já existente?
             <Link href="/">
-              <a className="line-link ml-1 text-pink border-pink">
+              <a className="line-link ml-1 text-secondary border-secondary">
                 Clique aqui
               </a>
             </Link>

@@ -4,6 +4,7 @@ import { LogotypeSVG } from './svg/LogotypeSVG'
 
 import { useAuth } from '../hooks/useAuth'
 import { DarkMode } from './DarkMode'
+import { Theme } from './Theme'
 
 type HeaderProps = HTMLAttributes<HTMLElement>
 
@@ -11,7 +12,7 @@ export const Header = (props: HeaderProps) => {
   const { user, signOutWithGoogle } = useAuth()
 
   return (
-    <header className="border-b border-gray-light border-solid dark:border-black-dark">
+    <header className="border-b border-light-dark border-solid">
       <div
         className={`
           px-4 max-w-7xl mx-auto
@@ -24,8 +25,9 @@ export const Header = (props: HeaderProps) => {
             <LogotypeSVG className="h-[45px]" />
           </a>
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 lg:gap-4">
           {props.children}
+          <Theme />
           <DarkMode />
           {user && (
             <button
@@ -34,7 +36,7 @@ export const Header = (props: HeaderProps) => {
                 -ml-2
                 w-10 h-10
                 opacity-70
-                animate-hover hover:text-pink"
+                animate-hover hover:text-secondary"
               onClick={signOutWithGoogle}
             >
               <svg
