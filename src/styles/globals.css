@@ -2,7 +2,7 @@
  * This project use Just-in-Time Mode
  * https://tailwindcss.com/docs/just-in-time-mode
  *
- * Utility classes can NEVER be dynamically generated.
+ * Utility classes can NEVER be dynamic values.
  *
  * For example, instead of:
  *    className={`text-${small ? 'sm' : 'lg'}`}

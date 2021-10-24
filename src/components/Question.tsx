@@ -17,15 +17,17 @@ export const Question = (props: QuestionProps) => {
   return (
     <article
       className={`
-        p-6
-        bg-white rounded-lg shadow
-        ${props.className || ''}
+        p-6 rounded-lg shadow
         ${
           props.isHighLighted &&
           'bg-purple-light border border-purple borde-solid'
         }
         ${props.isAnswered && 'bg-gray-light'}
-        `}
+        ${
+          // default
+          !props.isAnswered && !props.isHighLighted && 'bg-white'
+        }
+        ${props.className || ''}`}
     >
       {props.content}
 
