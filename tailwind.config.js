@@ -33,6 +33,7 @@ module.exports = {
         '0':            '#485BFF',
         '1':            '#FF59F8',
       },
+      google:           '#EA4335',
     },
     fontWeight: {
       normal:     400,

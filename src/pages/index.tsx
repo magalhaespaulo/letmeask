@@ -112,10 +112,7 @@ const Home: NextPage = () => {
             <LogotypeSVG />
           </div>
 
-          <Button
-            className="mt-7 lg:mt-14 text-white bg-[#EA4335]"
-            onClick={signIn}
-          >
+          <Button google className="mt-7 lg:mt-14" onClick={signIn}>
             {loadingGoogle ? <SpinnerSVG /> : <GoogleIconSVG />}
             <span className="ml-2">Crie sua sala com o Google</span>
           </Button>
@@ -130,12 +127,7 @@ const Home: NextPage = () => {
 
           <form className="flex flex-col" onSubmit={handleJoinRoom}>
             <input
-              className={`
-                px-6 h-14
-                bg-white rounded-lg
-                border border-gray
-                text-black"
-                ${animate}`}
+              className={animate}
               type="text"
               placeholder="Digite o código da sala"
               onChange={(event) => setRoomCode(event.target.value)}

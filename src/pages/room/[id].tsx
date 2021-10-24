@@ -135,15 +135,12 @@ const Room: NextPage = () => {
         <RoomCode code={roomId} />
         {isAdmin &&
           (isClosed ? (
-            <Button className="h-10" onClick={handleOpenRoom}>
-              Abrir&nbsp;<span className="hidden lg:inline">sala</span>
+            <Button small onClick={handleOpenRoom}>
+              Abrir<span className="hidden lg:inline">&nbsp;sala</span>
             </Button>
           ) : (
-            <Button
-              className="px-3 lg:px-6 h-10 text-purple bg-transparent border border-purple border-solid"
-              onClick={handleEndRoom}
-            >
-              Encerrar&nbsp;<span className="hidden lg:inline">sala</span>
+            <Button small outline onClick={handleEndRoom}>
+              Encerrar<span className="hidden lg:inline">&nbsp;sala</span>
             </Button>
           ))}
       </Header>
@@ -179,12 +176,7 @@ const Room: NextPage = () => {
           !isClosed && (
             <form className="mb-9" onSubmit={handleSendQuestion}>
               <textarea
-                className={`
-                    resize-none
-                    p-5
-                    w-full h-36
-                    bg-white rounded-lg shadow
-                    ${animate}`}
+                className={animate}
                 placeholder="O que você quer perguntar?"
                 onChange={(event) => setNewQuestion(event.target.value)}
                 value={newQuestion}

@@ -6,10 +6,7 @@ export const GoogleIconSVG = (props: SVGAttributes<SVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      {...props}
-      className={`
-      h-6 w-6
-      ${props.className || ''}`}
+      className={props.className || 'w-6 h-6'}
     >
       <path
         d="M12 5C13.6168 5 15.1013 5.55353 16.2863 6.47406L19.9235 3.00409C17.8088 1.13995 15.0406 0 12 0C7.3924 0 3.39667 2.59991 1.3858 6.40985L5.43024 9.60278C6.40997 6.91937 8.97748 5 12 5Z"
@@ -39,7 +36,7 @@ export const GoogleIconSVG = (props: SVGAttributes<SVGElement>) => {
       />
       <path
         d="M23.9944 12.147C23.9952 12.0978 24 12.0494 24 12C24 11.986 23.9978 11.9725 23.9977 11.9586C23.9971 12.0215 23.9939 12.0838 23.9944 12.147Z"
-        fill="#E6E6E6"
+        fill="currentColor"
       />
       <path
         opacity="0.2"

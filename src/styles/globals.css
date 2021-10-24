@@ -1,4 +1,16 @@
 /*
+ * This project use Just-in-Time Mode
+ * https://tailwindcss.com/docs/just-in-time-mode
+ *
+ * Utility classes can NEVER be dynamically generated.
+ *
+ * For example, instead of:
+ *    className={`text-${small ? 'sm' : 'lg'}`}
+ * Use:
+ *    className={small ? 'text-sm' : 'text-lg'}
+ */
+
+/*
  * Tailwind CSS has the Preflight
  * https://tailwindcss.com/docs/preflight
  */
@@ -11,9 +23,9 @@
  * Globals
  */
 
-html,
 body {
   @apply font-roboto text-black bg-background;
+  @apply min-h-screen;
 }
 
 /*
@@ -48,5 +60,26 @@ body {
     @apply border-b border-solid;
     @apply animate-hover;
     @apply hover:border-transparent;
+  }
+
+  /*
+   * Input Style
+   */
+
+  input {
+    @apply px-6 h-14;
+    @apply bg-white rounded-lg;
+    @apply border border-gray;
+  }
+
+  /*
+   * Textarea Style
+   */
+
+  textarea {
+    @apply resize-none;
+    @apply p-5;
+    @apply w-full h-36;
+    @apply bg-white rounded-lg shadow;
   }
 }

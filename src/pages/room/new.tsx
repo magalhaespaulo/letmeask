@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { FormEvent, useState } from 'react'
@@ -115,12 +114,7 @@ const RoomNew: NextPage = () => {
 
           <form className="flex flex-col" onSubmit={handleCreateRoom}>
             <input
-              className={`
-                px-6 h-14
-                bg-white rounded-lg
-                border border-gray
-                text-black"
-                ${animate}`}
+              className={animate}
               type="text"
               placeholder="Nome da sala"
               onChange={(event) => setNewRoom(event.target.value)}

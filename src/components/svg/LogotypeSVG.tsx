@@ -6,10 +6,7 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 157 75"
-      {...props}
-      className={`
-        h-20
-        ${props.className || ''}`}
+      className={props.className || 'h-20'}
     >
       <path d="M0 18.999H4.47282V40.2735H0V18.999Z" fill="currentColor" />
       <path

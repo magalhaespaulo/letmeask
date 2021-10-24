@@ -6,10 +6,7 @@ export const IllustrationSVG = (props: SVGAttributes<SVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 313 404"
-      {...props}
-      className={`
-        h-44 lg:h-96
-        ${props.className || ''}`}
+      className={props.className || 'h-44 lg:h-96'}
     >
       <path
         opacity="0.5"
