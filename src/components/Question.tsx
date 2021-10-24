@@ -17,15 +17,16 @@ export const Question = (props: QuestionProps) => {
   return (
     <article
       className={`
-        p-6 rounded-lg shadow
+        p-6 rounded-lg
         ${
-          props.isHighLighted &&
-          'bg-purple-light border border-purple borde-solid'
+          props.isHighLighted
+            ? 'bg-purple-light border border-purple borde-solid dark:bg-black-darkness'
+            : 'bg-white dark:bg-black-dark'
         }
-        ${props.isAnswered && 'bg-gray-light'}
         ${
-          // default
-          !props.isAnswered && !props.isHighLighted && 'bg-white'
+          props.isAnswered && !props.isHighLighted
+            ? 'opacity-60 dark:opacity-40'
+            : 'shadow'
         }
         ${props.className || ''}`}
     >

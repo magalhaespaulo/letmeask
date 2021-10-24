@@ -5,7 +5,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/icons/**/*.{js,ts,jsx,tsx}'
   ],
-  darkMode: false,
+  darkMode: 'class',
   theme: {
     screens: {
       sm: '480px',
@@ -17,7 +17,11 @@ module.exports = {
       transparent:      'transparent',
       background:       '#F8F8F8',
       white:            '#FEFEFE',
-      black:            '#29292E',
+      black: {
+        DEFAULT:        '#29292E',
+        'dark':         '#222222',
+        'darkness':     '#171819',
+      },
       gray: {
         'light':        '#DBDCDD',
         DEFAULT:        '#A8A8B3',

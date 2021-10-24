@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
+import { ThemeProvider } from 'next-themes'
 import { AuthContextProvider } from '../contexts/AuthContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -12,9 +13,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Let Me Ask</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AuthContextProvider>
-        <Component {...pageProps} />
-      </AuthContextProvider>
+      <ThemeProvider attribute="class">
+        <AuthContextProvider>
+          <Component {...pageProps} />
+        </AuthContextProvider>
+      </ThemeProvider>
     </>
   )
 }

@@ -3,6 +3,7 @@ import { HTMLAttributes } from 'react'
 import { LogotypeSVG } from './svg/LogotypeSVG'
 
 import { useAuth } from '../hooks/useAuth'
+import { DarkMode } from './DarkMode'
 
 type HeaderProps = HTMLAttributes<HTMLElement>
 
@@ -10,7 +11,7 @@ export const Header = (props: HeaderProps) => {
   const { user, signOutWithGoogle } = useAuth()
 
   return (
-    <header className="border-b border-gray-light border-solid">
+    <header className="border-b border-gray-light border-solid dark:border-black-dark">
       <div
         className={`
           px-4 max-w-7xl mx-auto
@@ -25,13 +26,14 @@ export const Header = (props: HeaderProps) => {
         </Link>
         <div className="flex items-center gap-4">
           {props.children}
+          <DarkMode />
           {user && (
             <button
               className="
                 flex items-center justify-center
                 -ml-2
                 w-10 h-10
-                text-gray-dark
+                opacity-70
                 animate-hover hover:text-pink"
               onClick={signOutWithGoogle}
             >

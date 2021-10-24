@@ -25,6 +25,7 @@
 
 body {
   @apply font-roboto text-black bg-background;
+  @apply dark:bg-black dark:text-white;
   @apply min-h-screen;
 }
 
@@ -70,6 +71,7 @@ body {
     @apply px-6 h-14;
     @apply bg-white rounded-lg;
     @apply border border-gray;
+    @apply text-black dark:text-black;
   }
 
   /*
@@ -81,5 +83,6 @@ body {
     @apply p-5;
     @apply w-full h-36;
     @apply bg-white rounded-lg shadow;
+    @apply text-black dark:text-black;
   }
 }
