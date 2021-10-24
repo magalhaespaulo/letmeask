@@ -60,13 +60,19 @@ O app estará disponível no seu browser pelo endereço http://localhost:3000.
 
 Este é um projeto desenvolvido durante a **[Next Level Week Together](https://nextlevelweek.com/)**, apresentada dos dias 20 a 27 de Junho de 2021.
 
-_Letmeask é perfeito para criadores de conteúdos poderem criar salas de Q&A com o seu público, de uma forma muito organizada e democrática._
+Além do desenvolvimento proposto, foi adicionardo funcionalidades extras:
+
+- `Modo escuro`
+- `Responsividade`
+- `Micro Interações`
+- `Design System`
+- `White Label`
+
+_Let Me Ask é perfeito para criadores de conteúdos poderem criar salas de Q&A com o seu público, de uma forma muito organizada e democrática._
 
 <br><br>
 
-# 🔖 Layout
-
-Você pode visualizar o layout do projeto através do link abaixo:
+# 🎨 Layout
 
 - [Layout Web](https://www.figma.com/community/file/1009824839797878169/Letmeask)
 
