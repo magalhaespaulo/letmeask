@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { FormEvent, useState } from 'react'
@@ -11,11 +10,11 @@ import { push, ref, remove, update } from 'firebase/database'
 import { useRoom } from '../../hooks/useRoom'
 import { useAnimate } from '../../hooks/useAnimate'
 
+import { Metadata } from '../../components/Metadata'
 import { Header } from '../../components/Header'
 import { Button } from '../../components/Button'
 import { RoomCode } from '../../components/RoomCode'
 import { Question } from '../../components/Question'
-
 import { SpinnerSVG } from '../../components/svg/SpinnerSVG'
 
 const Room: NextPage = () => {
@@ -78,14 +77,11 @@ const Room: NextPage = () => {
 
   const handleLikeQuestion = async (questionId: string, likeId?: string) => {
     if (likeId) {
-      await remove(
-        ref(database, `rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
-      )
+      await remove(ref(database, `rooms/${roomId}/questions/${questionId}/likes/${likeId}`))
     } else {
-      await push(
-        ref(database, `rooms/${roomId}/questions/${questionId}/likes`),
-        { authorId: user?.id }
-      )
+      await push(ref(database, `rooms/${roomId}/questions/${questionId}/likes`), {
+        authorId: user?.id,
+      })
     }
   }
 
@@ -105,19 +101,13 @@ const Room: NextPage = () => {
     })
   }
 
-  const handleCheckQuestionAnswered = async (
-    questionId: string,
-    previousValue: boolean
-  ) => {
+  const handleCheckQuestionAnswered = async (questionId: string, previousValue: boolean) => {
     await update(ref(database, `rooms/${roomId}/questions/${questionId}`), {
       isAnswered: !previousValue,
     })
   }
 
-  const handleHighlightQuestion = async (
-    questionId: string,
-    previousValue: boolean
-  ) => {
+  const handleHighlightQuestion = async (questionId: string, previousValue: boolean) => {
     await update(ref(database, `rooms/${roomId}/questions/${questionId}`), {
       isHighLighted: !previousValue,
     })
@@ -131,15 +121,17 @@ const Room: NextPage = () => {
 
   return (
     <>
+      <Metadata title={!title ? 'Carregando...' : `${title} | LetMeAsk`} />
+
       <Header>
         <RoomCode code={roomId} />
         {isAdmin &&
           (isClosed ? (
-            <Button small="true" onClick={handleOpenRoom}>
+            <Button small onClick={handleOpenRoom}>
               A<span className="hidden lg:inline">brir&nbsp;sala</span>
             </Button>
           ) : (
-            <Button small="true" outline="true" onClick={handleEndRoom}>
+            <Button small outline onClick={handleEndRoom}>
               E<span className="hidden lg:inline">ncerrar&nbsp;sala</span>
             </Button>
           ))}
@@ -163,9 +155,7 @@ const Room: NextPage = () => {
         ) : (
           // skeleton
           <header className="animate-pulse my-10 flex items-center flex-col lg:flex-row gap-2">
-            <h1 className="text-lg text-gray font-poppins font-bold">
-              Carregando
-            </h1>
+            <h1 className="text-lg text-gray font-poppins font-bold">Carregando</h1>
             <span className="px-4 py-2 rounded-full text-transparent text-sm font-medium bg-gray-light">
               0 Perguntas
             </span>
@@ -186,11 +176,7 @@ const Room: NextPage = () => {
                 className={`
                     flex justify-between gap-4
                     mt-4
-                ${
-                  !user
-                    ? 'flex-col lg:flex-row items-end lg:items-center'
-                    : 'items-center'
-                }`}
+                ${!user ? 'flex-col lg:flex-row items-end lg:items-center' : 'items-center'}`}
               >
                 {user ? (
                   <div className="flex items-center gap-3">
@@ -202,12 +188,7 @@ const Room: NextPage = () => {
                           w-8 h-8
                           bg-gray-light rounded-full"
                     >
-                      <Image
-                        src={user.avatar}
-                        alt={user.name}
-                        width={32}
-                        height={32}
-                      />
+                      <img src={user.avatar} alt={user.name} width={32} height={32} />
                     </div>
                     <div className="text-gray-dark text-sm">{user.name}</div>
                   </div>
@@ -224,9 +205,7 @@ const Room: NextPage = () => {
                     >
                       faça seu login
                     </button>
-                    {loadingGoogle && (
-                      <SpinnerSVG className="-ml-r ml-3 text-primary" />
-                    )}
+                    {loadingGoogle && <SpinnerSVG className="-ml-r ml-3 text-primary" />}
                   </span>
                 )}
                 <Button className="flex-none" type="submit" disabled={!user}>
@@ -279,9 +258,7 @@ const Room: NextPage = () => {
                       animate-hover hover:text-secondary disabled:hover:text-gray-dark
                       ${question.likeId ? 'text-primary' : 'text-gray-dark'}`}
                     aria-label="Gostei"
-                    onClick={() =>
-                      handleLikeQuestion(question.id, question.likeId)
-                    }
+                    onClick={() => handleLikeQuestion(question.id, question.likeId)}
                     disabled={!user || question.isAnswered || isClosed}
                   >
                     <svg
@@ -307,17 +284,10 @@ const Room: NextPage = () => {
                     <button
                       className={`
                         animate-hover hover:text-secondary ${
-                          question.isAnswered
-                            ? 'text-primary'
-                            : 'text-gray-dark'
+                          question.isAnswered ? 'text-primary' : 'text-gray-dark'
                         }`}
                       arial-label="Marcar como respondida"
-                      onClick={() =>
-                        handleCheckQuestionAnswered(
-                          question.id,
-                          question.isAnswered
-                        )
-                      }
+                      onClick={() => handleCheckQuestionAnswered(question.id, question.isAnswered)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -348,17 +318,10 @@ const Room: NextPage = () => {
                     <button
                       className={`
                         animate-hover hover:text-secondary ${
-                          question.isHighLighted
-                            ? 'text-primary'
-                            : 'text-gray-dark'
+                          question.isHighLighted ? 'text-primary' : 'text-gray-dark'
                         }`}
                       arial-label="Destacar pergunta"
-                      onClick={() =>
-                        handleHighlightQuestion(
-                          question.id,
-                          question.isHighLighted
-                        )
-                      }
+                      onClick={() => handleHighlightQuestion(question.id, question.isHighLighted)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

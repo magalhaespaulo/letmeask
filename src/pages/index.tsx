@@ -9,6 +9,7 @@ import { child, get, ref } from 'firebase/database'
 import { useAuth } from '../hooks/useAuth'
 import { useAnimate } from '../hooks/useAnimate'
 
+import { Metadata } from '../components/Metadata'
 import { Button } from '../components/Button'
 import { LogotypeSVG } from '../components/svg/LogotypeSVG'
 import { IllustrationSVG } from '../components/svg/IllustrationSVG'
@@ -62,85 +63,81 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen">
-      <aside
-        className="
-          flex-6
-          flex items-center justify-center
-          p-5
-          bg-primary"
-      >
-        <section
+    <>
+      <Metadata />
+
+      <main className="flex flex-col lg:flex-row min-h-screen">
+        <aside
           className="
-            flex flex-col items-start justify-center
-            max-w-lg"
+            flex-6
+            flex items-center justify-center
+            p-5
+            bg-primary
+          "
         >
-          <IllustrationSVG />
-          <h1
+          <section
             className="
-              text-2xl lg:text-4xl
-              text-white
-              lg:leading-[42px]
-              font-poppins font-bold"
+              flex flex-col items-start justify-center
+              max-w-lg
+            "
           >
-            Crie salas de perguntas e respostas ao vivo
-          </h1>
-          <p
-            className="
-              mt-2 lg:mt-6
-              opacity-70 text-white
-              text-base lg:text-2xl"
-          >
-            Tire dúvidas da sua audiência em tempo real
-          </p>
-        </section>
-      </aside>
+            <IllustrationSVG />
+            <h1
+              className="
+                text-2xl lg:text-4xl
+                text-white
+                lg:leading-[42px]
+                font-poppins font-bold
+              "
+            >
+              Crie salas de perguntas e respostas ao vivo
+            </h1>
+            <p
+              className="
+                mt-2 lg:mt-6
+                opacity-70 text-white
+                text-base lg:text-2xl
+              "
+            >
+              Tire dúvidas da sua audiência em tempo real
+            </p>
+          </section>
+        </aside>
 
-      <main
-        className="
-          flex-7
-          flex items-center justify-center
-          p-5"
-      >
-        <section
-          className="
-            flex-1
-            flex flex-col
-            max-w-xs"
-        >
-          <div className="flex items-center justify-center">
-            <LogotypeSVG />
-          </div>
+        <section className="flex-7 flex items-center justify-center p-5">
+          <div className="flex-1 flex flex-col max-w-xs">
+            <div className="flex items-center justify-center">
+              <LogotypeSVG />
+            </div>
 
-          <Button google="true" className="mt-7 lg:mt-14" onClick={signIn}>
-            {loadingGoogle ? <SpinnerSVG /> : <GoogleIconSVG />}
-            <span className="ml-2">Crie sua sala com o Google</span>
-          </Button>
-
-          <span className="flex items-center my-8">
-            <span className="flex-1 h-px bg-gray"></span>
-            <span className="flex-none mb-1 mx-5 text-gray text-sm">
-              ou entre em uma sala
-            </span>
-            <span className="flex-1 h-px bg-gray"></span>
-          </span>
-
-          <form className="flex flex-col" onSubmit={handleJoinRoom}>
-            <input
-              className={animate}
-              type="text"
-              placeholder="Digite o código da sala"
-              onChange={(event) => setRoomCode(event.target.value)}
-              value={roomCode}
-            />
-            <Button className="mt-5" type="submit">
-              {loadingJoinRoom ? <SpinnerSVG /> : <SignInSVG />}
-              <span className="ml-2">Entrar na sala</span>
+            <Button google className="mt-7 lg:mt-14" onClick={signIn}>
+              {loadingGoogle ? <SpinnerSVG /> : <GoogleIconSVG />}
+              <span className="ml-2">Crie sua sala com o Google</span>
             </Button>
-          </form>
+
+            <span className="flex items-center my-8">
+              <span className="flex-1 h-px bg-gray"></span>
+              <span className="flex-none mb-1 mx-5 text-gray text-sm">ou entre em uma sala</span>
+              <span className="flex-1 h-px bg-gray"></span>
+            </span>
+
+            <form className="flex flex-col" onSubmit={handleJoinRoom}>
+              <input
+                className={animate}
+                type="text"
+                placeholder="Digite o código da sala. Ex.: teste"
+                onChange={(event) => setRoomCode(event.target.value)}
+                value={roomCode}
+              />
+              <Button className="mt-5" type="submit">
+                {loadingJoinRoom ? <SpinnerSVG /> : <SignInSVG />}
+                <span className="ml-2">Entrar na sala</span>
+              </Button>
+            </form>
+          </div>
         </section>
       </main>
-    </div>
+    </>
   )
 }
 

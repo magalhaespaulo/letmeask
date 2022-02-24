@@ -1,12 +1,14 @@
 import { SVGAttributes } from 'react'
 
-export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
+type LogotypeSVGProps = SVGAttributes<SVGElement>
+
+export const LogotypeSVG = ({ className }: LogotypeSVGProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 157 75"
-      className={props.className || 'h-20'}
+      className={className || 'h-20'}
     >
       <path d="M0 18.999H4.47282V40.2735H0V18.999Z" fill="currentColor" />
       <path
@@ -52,11 +54,7 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           gradientUnits="userSpaceOnUse"
         >
           <stop className="text-primary" stopColor="currentColor" />
-          <stop
-            offset="0.96"
-            className="text-secondary"
-            stopColor="currentColor"
-          />
+          <stop offset="0.96" className="text-secondary" stopColor="currentColor" />
         </linearGradient>
         <linearGradient
           id="logotype_1_linear"
@@ -67,11 +65,7 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           gradientUnits="userSpaceOnUse"
         >
           <stop className="text-primary" stopColor="currentColor" />
-          <stop
-            offset="0.96"
-            className="text-secondary"
-            stopColor="currentColor"
-          />
+          <stop offset="0.96" className="text-secondary" stopColor="currentColor" />
         </linearGradient>
         <linearGradient
           id="logotype_2_linear"
@@ -82,11 +76,7 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           gradientUnits="userSpaceOnUse"
         >
           <stop className="text-primary" stopColor="currentColor" />
-          <stop
-            offset="0.96"
-            className="text-secondary"
-            stopColor="currentColor"
-          />
+          <stop offset="0.96" className="text-secondary" stopColor="currentColor" />
         </linearGradient>
         <linearGradient
           id="logotype_3_linear"
@@ -97,11 +87,7 @@ export const LogotypeSVG = (props: SVGAttributes<SVGElement>) => {
           gradientUnits="userSpaceOnUse"
         >
           <stop className="text-primary" stopColor="currentColor" />
-          <stop
-            offset="0.96"
-            className="text-secondary"
-            stopColor="currentColor"
-          />
+          <stop offset="0.96" className="text-secondary" stopColor="currentColor" />
         </linearGradient>
       </defs>
     </svg>

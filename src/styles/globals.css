@@ -72,10 +72,10 @@ body {
 }
 
 /*
- * Extending Tailwind CSS Components directive
+ * Extending Tailwind CSS base directive
  */
 
-@layer components {
+@layer base {
   /*
    * Dark Mode
    */
@@ -104,9 +104,9 @@ body {
    * Set the colors when using
    *
    * For example:
-   * <a className="line-link ml-1 text-secondary border-secondary">
+   * <a className="line-link text-secondary border-secondary">
    * or
-   * <button className="line-link mx-2 text-primary border-primary font-medium">
+   * <button className="line-link text-primary border-primary">
    */
 
   .line-link {

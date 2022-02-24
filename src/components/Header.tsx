@@ -8,7 +8,7 @@ import { Theme } from './Theme'
 
 type HeaderProps = HTMLAttributes<HTMLElement>
 
-export const Header = (props: HeaderProps) => {
+export const Header = ({ className = '', children }: HeaderProps) => {
   const { user, signOutWithGoogle } = useAuth()
 
   return (
@@ -18,7 +18,8 @@ export const Header = (props: HeaderProps) => {
           px-4 max-w-7xl mx-auto
           h-28
           flex items-center justify-between
-          ${props.className || ''}`}
+          ${className}
+        `}
       >
         <Link href="/">
           <a className="mt-1">
@@ -26,7 +27,7 @@ export const Header = (props: HeaderProps) => {
           </a>
         </Link>
         <div className="flex items-center gap-2 lg:gap-4">
-          {props.children}
+          {children}
           <Theme />
           <DarkMode />
           {user && (
@@ -36,7 +37,8 @@ export const Header = (props: HeaderProps) => {
                 -ml-2
                 w-10 h-10
                 opacity-70
-                animate-hover hover:text-secondary"
+                animate-hover hover:text-secondary
+              "
               onClick={signOutWithGoogle}
             >
               <svg

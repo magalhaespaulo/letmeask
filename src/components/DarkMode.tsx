@@ -3,26 +3,21 @@ import { useTheme } from 'next-themes'
 
 type DarkModeProps = HTMLAttributes<HTMLElement>
 
-export const DarkMode = (props: DarkModeProps) => {
+export const DarkMode = ({ className = '' }: DarkModeProps) => {
   const { theme, setTheme } = useTheme()
   const [isDark, setIsDark] = useState(false)
 
+  const [currentTheme, currentMode] = theme?.split(' ') ?? ['purple', '']
+
   const handleTheme = () => {
-    if (!theme) {
-      setTheme('purple')
-      return
-    }
-
-    const currentTheme = theme.split(' ')[0]
-    const currentMode = theme.split(' ')[1]
-
     if (currentMode === 'dark') {
       setTheme(currentTheme)
       setIsDark(false)
-    } else {
-      setTheme(currentTheme + ' dark')
-      setIsDark(true)
+      return
     }
+
+    setTheme(`${currentTheme} dark`)
+    setIsDark(true)
   }
 
   return (
@@ -32,7 +27,8 @@ export const DarkMode = (props: DarkModeProps) => {
         w-8 h-8
         opacity-70
         animate-hover hover:text-secondary
-        ${props.className || ''}`}
+        ${className}
+      `}
       onClick={handleTheme}
       aria-label="modo escuro"
     >

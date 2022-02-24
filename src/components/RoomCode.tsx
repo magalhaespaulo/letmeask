@@ -1,12 +1,15 @@
-import { ButtonHTMLAttributes } from 'react'
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 
-type RoomCodeProps = {
+type RoomCodeProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> & {
   code: string
-} & ButtonHTMLAttributes<HTMLButtonElement>
+}
 
-export const RoomCode = (props: RoomCodeProps) => {
+export const RoomCode = ({ className = '', code, ...props }: RoomCodeProps) => {
   const copyRoomCodeToClipboard = () => {
-    navigator.clipboard.writeText(props.code)
+    navigator.clipboard.writeText(code)
   }
 
   return (
@@ -19,7 +22,8 @@ export const RoomCode = (props: RoomCodeProps) => {
         rounded-lg
         border boder-solid border-primary
         animate-hover
-        ${props.className || ''}`}
+        ${className}
+      `}
       onClick={copyRoomCodeToClipboard}
     >
       <div
@@ -27,7 +31,8 @@ export const RoomCode = (props: RoomCodeProps) => {
           flex items-center justify-center
           w-11 h-full
           lg:bg-primary
-          text-primary lg:text-white"
+          text-primary lg:text-white
+        "
       >
         <svg
           width="20"
@@ -56,9 +61,10 @@ export const RoomCode = (props: RoomCodeProps) => {
         className="
           hidden lg:inline
           pl-3 pr-4
-          font-medium"
+          font-medium
+        "
       >
-        {props.code}
+        {code}
       </span>
     </button>
   )

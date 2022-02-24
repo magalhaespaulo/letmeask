@@ -1,4 +1,5 @@
-.next/*
-node_modules/*
-public/*
+node_modules
+.next
+public
+out
 tailwind.config.js

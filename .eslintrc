@@ -1,0 +1,11 @@
+{
+  "plugins": ["@typescript-eslint"],
+  "extends": ["next", "plugin:@typescript-eslint/recommended", "prettier"],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@next/next/no-img-element": "off" // We currently not using next/image because it isn't supported with SSG mode
+  }
+}

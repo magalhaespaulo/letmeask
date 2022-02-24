@@ -8,13 +8,12 @@ export const useAnimate = () => {
       return
     }
 
-    const time = setTimeout(() => {
+    const timeoutID = setTimeout(() => {
       setAnimate('')
-      clearTimeout(time)
     }, 1000)
 
     return () => {
-      clearTimeout(time)
+      clearTimeout(timeoutID)
     }
   }, [animate])
 

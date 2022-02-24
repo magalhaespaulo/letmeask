@@ -29,24 +29,22 @@ export const useRoom = (roomId: string) => {
       const databaseRoom = snapshot.val()
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
 
-      const parsedQuestions = Object.entries(firebaseQuestions).map(
-        ([key, value]) => {
-          return {
-            id: key,
-            content: value.content,
-            author: value.author,
-            isHighLighted: value.isHighLighted,
-            isAnswered: value.isAnswered,
-            likeCount: Object.values(value.likes ?? {}).length,
-            // hasLiked: Object.values(value.likes ?? {}).some(
-            //   (like) => like.authorId === user?.id
-            // ),
-            likeId: Object.entries(value.likes ?? {}).find(
-              ([key, like]) => like.authorId === user?.id
-            )?.[0],
-          }
+      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+        return {
+          id: key,
+          content: value.content,
+          author: value.author,
+          isHighLighted: value.isHighLighted,
+          isAnswered: value.isAnswered,
+          likeCount: Object.values(value.likes ?? {}).length,
+          // hasLiked: Object.values(value.likes ?? {}).some(
+          //   (like) => like.authorId === user?.id
+          // ),
+          likeId: Object.entries(value.likes ?? {}).find(
+            ([, like]) => like.authorId === user?.id
+          )?.[0],
         }
-      )
+      })
 
       setIsAdmin(databaseRoom.authorId === user?.id)
       setIsClosed(databaseRoom.closedAt ? true : false)

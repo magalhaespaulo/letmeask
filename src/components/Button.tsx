@@ -1,14 +1,20 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from 'react'
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
-  PropsWithChildren<{
-    small?: string
-    outline?: string
-    danger?: string
-    google?: string
-  }>
+type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
+  small?: boolean
+  outline?: boolean
+  danger?: boolean
+  google?: boolean
+}
 
-export const Button = (props: ButtonProps) => {
+export const Button = ({
+  className = '',
+  small,
+  outline,
+  danger,
+  google,
+  ...props
+}: ButtonProps) => {
   return (
     <button
       {...props}
@@ -17,27 +23,13 @@ export const Button = (props: ButtonProps) => {
         rounded-lg
         font-medium
         animate-hover
-        ${props.small ? 'px-3 lg:px-6 h-10' : 'px-6 h-14'}
-        ${props.outline && 'bg-transparent border border-solid'}
-        ${
-          props.danger &&
-          (props.outline ? `text-red border-red` : 'text-white bg-red')
-        }
-        ${
-          props.google &&
-          (props.outline ? 'text-google border-google' : 'text-white bg-google')
-        }
-        ${
-          // default
-          !props.danger &&
-          !props.google &&
-          (props.outline
-            ? 'text-primary border-primary'
-            : 'text-white bg-primary')
-        }
-        ${props.className || ''}`}
-    >
-      {props.children || 'Children undefined'}
-    </button>
+        ${small ? 'px-3 lg:px-6 h-10' : 'px-6 h-14'}
+        ${outline && 'bg-transparent border border-solid'}
+        ${danger && (outline ? `text-red border-red` : 'text-white bg-red')}
+        ${google && (outline ? 'text-google border-google' : 'text-white bg-google')}
+        ${!danger && !google && (outline ? 'text-primary border-primary' : 'text-white bg-primary')}
+        ${className}
+      `}
+    />
   )
 }

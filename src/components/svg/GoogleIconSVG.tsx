@@ -1,12 +1,14 @@
 import { SVGAttributes } from 'react'
 
-export const GoogleIconSVG = (props: SVGAttributes<SVGElement>) => {
+type GoogleIconSVGProps = SVGAttributes<SVGElement>
+
+export const GoogleIconSVG = ({ className }: GoogleIconSVGProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      className={props.className || 'w-6 h-6'}
+      className={className || 'w-6 h-6'}
     >
       <path
         d="M12 5C13.6168 5 15.1013 5.55353 16.2863 6.47406L19.9235 3.00409C17.8088 1.13995 15.0406 0 12 0C7.3924 0 3.39667 2.59991 1.3858 6.40985L5.43024 9.60278C6.40997 6.91937 8.97748 5 12 5Z"
@@ -29,11 +31,7 @@ export const GoogleIconSVG = (props: SVGAttributes<SVGElement>) => {
         d="M12 23.75C8.46832 23.75 5.29272 22.2928 3.04755 19.9713C5.24536 22.4378 8.43646 24 12 24C15.5306 24 18.6953 22.4686 20.8881 20.0408C18.6496 22.3246 15.4981 23.75 12 23.75Z"
         fill="currentColor"
       />
-      <path
-        opacity="0.1"
-        d="M12 14.25V14.5H18.4862L18.5875 14.25H12Z"
-        fill="currentColor"
-      />
+      <path opacity="0.1" d="M12 14.25V14.5H18.4862L18.5875 14.25H12Z" fill="currentColor" />
       <path
         d="M23.9944 12.147C23.9952 12.0978 24 12.0494 24 12C24 11.986 23.9978 11.9725 23.9977 11.9586C23.9971 12.0215 23.9939 12.0838 23.9944 12.147Z"
         fill="currentColor"

@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { HTMLAttributes, PropsWithChildren } from 'react'
 
 type QuestionProps = HTMLAttributes<HTMLElement> &
@@ -13,7 +11,14 @@ type QuestionProps = HTMLAttributes<HTMLElement> &
     isAnswered: boolean
   }>
 
-export const Question = (props: QuestionProps) => {
+export const Question = ({
+  className = '',
+  children,
+  content,
+  author,
+  isHighLighted,
+  isAnswered,
+}: QuestionProps) => {
   return (
     <article
       className={`
@@ -21,25 +26,19 @@ export const Question = (props: QuestionProps) => {
         p-6
         bg-light-dark-alt
         shadow rounded-lg
-        ${props.isHighLighted && 'border border-primary borde-solid'}
-        ${props.isAnswered && !props.isHighLighted && 'opacity-50'}
-        ${props.className || ''}`}
+        ${isHighLighted && 'border border-primary borde-solid'}
+        ${isAnswered && !isHighLighted && 'opacity-50'}
+        ${className}
+      `}
     >
       <span
         className={`
-          ${
-            props.isHighLighted &&
-            'pointer-events-none absolute inset-0 bg-primary opacity-10'
-          }
+          ${isHighLighted && 'pointer-events-none absolute inset-0 bg-primary opacity-10'}
         `}
-      ></span>
-      {props.content}
+      />
+      {content}
 
-      <div
-        className="
-          flex items-center justify-between gap-4
-          mt-8"
-      >
+      <div className="mt-8 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div
             className="
@@ -47,19 +46,15 @@ export const Question = (props: QuestionProps) => {
               flex-none
               flex items-center justify-center
               w-8 h-8
-              bg-gray-light rounded-full"
+              bg-gray-light rounded-full
+            "
           >
-            <Image
-              src={props.author.avatar}
-              alt={props.author.name}
-              width={32}
-              height={32}
-            />
+            <img src={author.avatar} alt={author.name} width={32} height={32} />
           </div>
-          <div className="text-gray-dark text-sm">{props.author.name}</div>
+          <div className="text-gray-dark text-sm">{author.name}</div>
         </div>
 
-        <div className="flex-none">{props.children}</div>
+        <div className="flex-none">{children}</div>
       </div>
     </article>
   )

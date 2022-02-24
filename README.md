@@ -1,86 +1,126 @@
 <p align="center">
-  <img alt="Letmeask" src=".github/logo.svg" width="160px">
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/static/v1?label=NLW&message=06&color=8257E5&labelColor=000000" alt="NLW Together 06" />
-
-  <img src="https://img.shields.io/github/stars/magalhaespaulo/letmeask?label=stars&message=MIT&color=8257E5&labelColor=000000" alt="Stars">
-
-  <img  src="https://img.shields.io/static/v1?label=license&message=MIT&color=8257E5&labelColor=000000" alt="License">
-</p>
-
-<br>
-
-<p align="center">
     <img alt="Letmeask" src=".github/cover.png" />
 </p>
 
-<br><br>
+<br />
 
-# 🧪 Tecnologias
+# Let Me Ask
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+This project was developed during **[Next Level Week Together](https://nextlevelweek.com/)**, from the 20th to the 27th of June 2021.
 
-- [Next.js](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Firebase](https://firebase.google.com/)
-- [TypeScript](https://www.typescriptlang.org/)
+Extra `features` have been added in addition to the proposed development:
 
-<br><br>
-
-# 🚀 Como executar
-
-Clone o projeto e acesse a pasta do mesmo.
-
-```bash
-$ git clone https://github.com/magalhaespaulo/letmeask
-$ cd letmeask
-```
-
-Crie um projeto no [Firebase](https://firebase.google.com/) para disponibilizar um Realtime Database.
-
-Configure as variável de ambiente criando um `.env.local` seguindo o modelo `.env.example`.
-
-Para iniciá-lo, siga os passos abaixo:
-
-```bash
-# Instalar as dependências
-$ yarn
-
-# Iniciar o projeto
-$ yarn dev
-```
-
-O app estará disponível no seu browser pelo endereço http://localhost:3000.
-
-<br><br>
-
-# 💻 Projeto
-
-Este é um projeto desenvolvido durante a **[Next Level Week Together](https://nextlevelweek.com/)**, apresentada dos dias 20 a 27 de Junho de 2021.
-
-Além do desenvolvimento proposto, foi adicionado funcionalidades extras:
-
-- `Temas`
-- `Modo escuro`
-- `Responsividade`
-- `Micro Interações`
-- `Design System`
+- `Themes`
+- `Dark Mode`
+- `Accessible`
+- `Responsive`
 - `White Label`
+- `Design System`
+- `Microinteractions`
+- `SEO-friendly`
+- `Production-ready`
+- `Developer Experience`
 
-_Let Me Ask é perfeito para criadores de conteúdos poderem criar salas de Q&A com o seu público, de uma forma muito organizada e democrática._
+<br />
 
-<br><br>
+# 🎨 Prototype
 
-# 🎨 Layout
+- [Figma](https://www.figma.com/community/file/1009824839797878169/Letmeask)
 
-- [Layout Web](https://www.figma.com/community/file/1009824839797878169/Letmeask)
+<br />
 
-Lembrando que você precisa ter uma conta no [Figma](http://figma.com/).
+# 📝 Prerequisites
 
-<br><br>
+- [Git](https://git-scm.com/) v2.x
+- [Node](https://reactjs.org/) v14.x
+- [Yarn](https://yarnpkg.com/) v1.22.x
+
+<br />
+
+# 🧪 Features
+
+Developer experience first:
+
+- 🔥 [Next.js](https://nextjs.org) for SSG or SSR
+- 🎨 [Tailwind CSS](https://tailwindcss.com) with JIT mode
+- 💾 [Firebase](https://firebase.google.com) to provide Realtime Database
+- 🎉 Type checking [TypeScript](https://typescriptlang.org)
+- ✅ Strict Mode for TypeScript and [React](https://reactjs.org)
+- ✏️ Linter with [ESLint](https://eslint.org) (default NextJS and Core Web Vitals)
+- 🛠 Code Formatter with [Prettier](https://prettier.io) and [EditorConfig](https://editorconfig.org/)
+- 🦊 [Husky](https://typicode.github.io/husky) for Git Hooks
+- 🚫 [Lint-staged](https://github.com/okonet/lint-staged) to run linter only on staged files
+- 🗂 [VSCode](https://code.visualstudio.com/) configuration: Settings and Extensions for ESLint, Prettier, TypeScript and Tailwind CSS
+- 🤖 SEO metadata, JSON-LD and Open Graph tags with Next SEO
+- 💯 Maximize [Lighthouse](https://developers.google.com/web/tools/lighthouse) score
+
+Built-in feature from Next.js:
+
+- ☕ Minify HTML & CSS
+- 💨 Live reload
+- ✅ Cache busting
+
+Philosophy:
+
+- ♿ Accessible
+- 📱 Mobile-first (Responsive everything)
+- 🤖 SEO-friendly
+- 🚀 Production-ready
+
+<br />
+
+# 💻 Getting Started
+
+First, create a project in [Firebase](https://firebase.google.com/) to provide a Realtime Database.
+
+Set environment variables in `.env.local` following `.env.example`
+
+<br />
+
+Now, run the development server:
+
+```bash
+# Install dependencies
+yarn install
+
+# Runs the app in development mode
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+<br />
+
+# 🔥 Production
+
+You can see the results locally in production mode with:
+
+```bash
+# Runs the app in production mode
+yarn prod
+```
+
+The generated HTML and CSS files are minified (built-in feature from [Next.js](https://nextjs.org)). It will also removed unused CSS from [Tailwind CSS](https://tailwindcss.com).
+
+<br />
+
+# 🚀 Deploy with [static export](https://nextjs.org/docs/advanced-features/static-html-export)
+
+You can create an optimized production build with:
+
+```bash
+# Optimized production build with static export
+yarn export
+```
+
+Now, is ready to be deployed. All generated files are located at `out` folder, which you can deploy with any hosting service.
+
+`or`
+
+just [deploy to Vercel](https://nextjs.org/learn/basics/deploying-nextjs-app/deploy)
+
+<br />
 
 # 📝 License
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Licensed under the [MIT License](LICENSE), Copyright © 2021
